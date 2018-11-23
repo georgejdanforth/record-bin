@@ -6,35 +6,20 @@ import AddFolder from './AddFolder';
 
 class Folder extends Component {
 
-    state = {
-        addingFolder: false,
-        folders: []
-    };
+    state = { addingFolder: false };
 
-    componentDidMount()  {
-        this.setState({
-            folders: this.props.folders.map(folder => (
-                <li key={folder.id}>
-                    <Folder addFolder={this.addFolder} {...folder}/>
-                </li>
-            ))
-        });
-    }
+    insertAddFolder = () => this.setState({ addingFolder: true });
 
-    insertAddFolder = () => this.setState({
-        addingFolder: true,
-        folders: _.concat(
-            [<li key={'add'}><AddFolder addFolder={this.addFolder}/></li>],
-            this.state.folders
-        )
-    });
+    addFolder = (folderName, path=[]) => this.setState(
+        { addingFolder: false },
+        () => this.props.addFolder(folderName, _.concat([this.props.id], path))
+    );
 
-    addFolder = (folderName, path=[]) => this.setState({
-        addingFolder: false,
-        folders: this.state.addingFolder
-            ? _.drop(this.state.folders)
-            : this.state.folders
-    }, () => this.props.addFolder(folderName, _.concat([this.props.id], path)));
+    renderFolders = () => this.props.folders.map(folder => (
+        <li key={folder.id}>
+            <Folder addFolder={this.addFolder} {...folder}/>
+        </li>
+    ));
 
     render() {
         return (
@@ -48,7 +33,10 @@ class Folder extends Component {
                         +
                     </Button>
                 </span>
-                <ul>{ this.state.folders }</ul>
+                <ul>
+                    { this.state.addingFolder && <li><AddFolder addFolder={this.addFolder}/></li> }
+                    { this.renderFolders() }
+                </ul>
             </div>
         );
     }
