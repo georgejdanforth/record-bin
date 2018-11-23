@@ -16,7 +16,11 @@ class AddFolder extends Component {
                     onChange={this.updateFolderName}
                     placeholder={'Folder Name'}
                 />
-                <Button>+</Button>
+                <Button
+                    onClick={() => this.props.addFolder(this.state.folderName)}
+                >
+                    +
+                </Button>
             </div>
         );
     }

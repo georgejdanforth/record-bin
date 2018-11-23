@@ -13,19 +13,28 @@ class Folder extends Component {
 
     componentDidMount()  {
         this.setState({
-            folders: this.props.folders.map(
-                folder => <li key={folder.id}><Folder {...folder}/></li>
-            )
+            folders: this.props.folders.map(folder => (
+                <li key={folder.id}>
+                    <Folder addFolder={this.addFolder} {...folder}/>
+                </li>
+            ))
         });
     }
 
     insertAddFolder = () => this.setState({
         addingFolder: true,
         folders: _.concat(
-            this.state.folders,
-            [<li key={'add'}><AddFolder/></li>]
+            [<li key={'add'}><AddFolder addFolder={this.addFolder}/></li>],
+            this.state.folders
         )
     });
+
+    addFolder = (folderName, path=[]) => this.setState({
+        addingFolder: false,
+        folders: this.state.addingFolder
+            ? _.drop(this.state.folders)
+            : this.state.folders
+    }, () => this.props.addFolder(folderName, _.concat([this.props.id], path)));
 
     render() {
         return (

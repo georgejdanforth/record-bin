@@ -6,7 +6,7 @@ import { ADD_FOLDER } from '../actions/directoryTree';
 const getNode = (root, path, depth=0) => depth >= path.length
     ? root
     : getNode(
-        _.find(root.folders, folder => folder.name === path[depth]),
+        _.find(root.folders, folder => folder.id === path[depth]),
         path,
         depth + 1
     );
