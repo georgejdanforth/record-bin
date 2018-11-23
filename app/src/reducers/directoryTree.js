@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import uuidv4 from 'uuid/v4';
 
 import { ADD_FOLDER } from '../actions/directoryTree';
 
@@ -15,12 +16,16 @@ const deepCopy = object => JSON.parse(JSON.stringify(object));
 const addFolder = action => {
     const tree = deepCopy(action.directoryTree);
     const folder = getNode(tree, action.path);
-    folder.folders.push({ name: action.folderName, folders: []});
+    folder.folders.push({
+        id: `folder-${uuidv4()}`,
+        name: action.folderName,
+        folders: []
+    });
 
     return tree;
 };
 
-const directoryTree = (state={ name: 'root', folders: [] }, action) => {
+const directoryTree = (state={ id: 'root', name: 'root', folders: [] }, action) => {
     switch (action.type) {
         case ADD_FOLDER:
             return addFolder(action);
