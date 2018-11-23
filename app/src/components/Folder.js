@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import { Button } from 'bloomer';
+import _ from 'lodash';
+
+import AddFolder from './AddFolder';
 
 class Folder extends Component {
 
-    state = { folders: [] };
+    state = {
+        addingFolder: false,
+        folders: []
+    };
 
     componentDidMount()  {
         this.setState({
@@ -12,10 +19,26 @@ class Folder extends Component {
         });
     }
 
+    insertAddFolder = () => this.setState({
+        addingFolder: true,
+        folders: _.concat(
+            this.state.folders,
+            [<li key={'add'}><AddFolder/></li>]
+        )
+    });
+
     render() {
         return (
             <div>
-                <span>{ this.props.name }</span>
+                <span>
+                    { this.props.name }
+                    <Button
+                        disabled={this.state.addingFolder}
+                        onClick={this.insertAddFolder}
+                    >
+                        +
+                    </Button>
+                </span>
                 <ul>{ this.state.folders }</ul>
             </div>
         );
