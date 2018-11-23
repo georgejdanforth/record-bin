@@ -1,5 +1,7 @@
 import { combineReducers } from 'redux';
 
-const rootReducer = combineReducers({});
+import directoryTree from './directoryTree';
+
+const rootReducer = combineReducers({ directoryTree });
 
 export default rootReducer;
