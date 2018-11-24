@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Icon } from '@mdi/react';
-import { mdiFolder } from '@mdi/js';
 
-import './Folder.css';
 import './AddFolder.css';
+import { FolderIcon } from './icons';
 
 class AddFolder extends Component {
 
@@ -33,12 +31,7 @@ class AddFolder extends Component {
     render() {
         return (
             <div>
-                <Icon
-                    className="folder-icon"
-                    path={mdiFolder}
-                    size={0.8}
-                    color="lightgray"
-                />
+                <FolderIcon/>
                 <input
                     className="add-folder-input"
                     onBlur={this.props.cancelAddFolder}

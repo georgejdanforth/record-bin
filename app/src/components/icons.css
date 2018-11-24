@@ -1,0 +1,10 @@
+svg.folder-icon {
+    position: relative;
+    top: 3px;
+    margin-right: 0.5rem;
+}
+
+svg.chevron-icon {
+    position: relative;
+    top: 5px;
+}

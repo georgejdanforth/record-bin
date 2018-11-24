@@ -1,0 +1,14 @@
+button.action-button {
+    border: none;
+    outline: none;
+    background: none;
+}
+
+button.action-button svg {
+    fill: gray;
+}
+
+button.action-button:hover svg {
+    fill: black;
+    cursor: pointer;
+}

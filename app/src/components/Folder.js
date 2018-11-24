@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import { Button } from 'bloomer';
-import Icon from '@mdi/react';
-import {
-    mdiChevronDown,
-    mdiChevronRight,
-    mdiFolder,
-    mdiFolderPlus
-} from '@mdi/js';
 import _ from 'lodash';
 
 import './Folder.css';
 import AddFolder from './AddFolder';
+import ButtonGroup from './ButtonGroup';
+import { FolderIcon, ChevronIcon } from './icons';
 
 class Folder extends Component {
 
@@ -22,7 +16,6 @@ class Folder extends Component {
     toggleExpanded = () => this.setState({ expanded: !this.state.expanded });
 
     insertAddFolder = () => this.setState({ addingFolder: true });
-
     cancelAddFolder = () => this.setState({ addingFolder: false });
 
     addFolder = (folderName, path=[]) => this.setState(
@@ -40,31 +33,16 @@ class Folder extends Component {
         return (
             <div>
                 <span className="folder-title" onClick={this.toggleExpanded}>
-                    <Icon
-                        className="folder-icon"
-                        path={mdiFolder}
-                        size={0.8}
-                        color="lightgray"
-                    />
+                    <FolderIcon/>
                     { this.props.name }
-                    <Icon
-                        className="chevron-icon"
-                        path={this.state.expanded ? mdiChevronDown : mdiChevronRight}
-                        size={0.8}
-                        color="gray"
-                    />
+                    <ChevronIcon expanded={this.state.expanded}/>
                 </span>
                 { this.state.expanded &&
                     <div>
-                        <div>
-                            <Button
-                                className="action-button"
-                                disabled={this.state.addingFolder}
-                                onClick={this.insertAddFolder}
-                            >
-                                <Icon path={mdiFolderPlus} size={0.8}/>
-                            </Button>
-                        </div>
+                        <ButtonGroup
+                            addFolderDisabled={this.state.addingFolder}
+                            insertAddFolder={this.insertAddFolder}
+                        />
                         <ul>
                             { this.state.addingFolder &&
                                 <li>
