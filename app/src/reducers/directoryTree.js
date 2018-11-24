@@ -28,7 +28,8 @@ const addFolder = action => {
     folder.folders.push({
         id: `folder-${uuidv4()}`,
         name: action.folderName,
-        folders: []
+        folders: [],
+        tracks: [],
     });
 
     return tree;
@@ -44,7 +45,20 @@ const deleteFolder = action => {
     return tree;
 };
 
-const directoryTree = (state={ id: 'root', name: 'root', folders: [] }, action) => {
+const addTrack = action => {
+    const tree = deepCopy(action.directoryTree);
+    const folder = getNode(tree, action.path);
+    folder.tracks.push(action.track);
+
+    return tree;
+};
+
+const directoryTree = (state={
+    id: 'root',
+    name: 'root',
+    folders: [],
+    tracks: [],
+}, action) => {
     switch (action.type) {
         case ADD_FOLDER:
             return addFolder(action);
