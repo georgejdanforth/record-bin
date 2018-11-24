@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addFolder } from '../actions/directoryTree';
+import { addFolder, deleteFolder } from '../actions/directoryTree';
 import AddFolder from '../components/AddFolder';
 import ButtonGroup from '../components/ButtonGroup';
 import Folder from '../components/Folder';
@@ -18,9 +18,18 @@ class Root extends Component {
         () => this.props.addFolder(this.props.directoryTree, path, folderName)
     );
 
+    deleteFolder = path => this.props.deleteFolder(
+        this.props.directoryTree,
+        path
+    );
+
     renderFolders = () => this.props.directoryTree.folders.map(folder => (
         <li key={folder.id}>
-            <Folder addFolder={this.addFolder} {...folder}/>
+            <Folder
+                addFolder={this.addFolder}
+                deleteFolder={this.deleteFolder}
+                {...folder}
+            />
         </li>
     ));
 
@@ -30,6 +39,7 @@ class Root extends Component {
                 <ButtonGroup
                     addFolderDisabled={this.state.addingFolder}
                     insertAddFolder={this.insertAddFolder}
+                    showDelete={false}
                 />
                 <ul>
                     { this.state.addingFolder &&
@@ -50,4 +60,10 @@ class Root extends Component {
 
 const mapStateToProps = state => ({ directoryTree: state.directoryTree });
 
-export default connect(mapStateToProps, { addFolder })(Root);
+export default connect(
+    mapStateToProps,
+    {
+        addFolder,
+        deleteFolder
+    }
+)(Root);

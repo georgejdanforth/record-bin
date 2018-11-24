@@ -23,9 +23,15 @@ class Folder extends Component {
         () => this.props.addFolder(folderName, _.concat([this.props.id], path))
     );
 
+    deleteFolder = path => this.props.deleteFolder(_.concat([this.props.id], path));
+
     renderFolders = () => this.props.folders.map(folder => (
         <li key={folder.id}>
-            <Folder addFolder={this.addFolder} {...folder}/>
+            <Folder
+                addFolder={this.addFolder}
+                deleteFolder={this.deleteFolder}
+                {...folder}
+            />
         </li>
     ));
 
@@ -42,6 +48,7 @@ class Folder extends Component {
                         <ButtonGroup
                             addFolderDisabled={this.state.addingFolder}
                             insertAddFolder={this.insertAddFolder}
+                            deleteFolder={() => this.deleteFolder([])}
                         />
                         <ul>
                             { this.state.addingFolder &&

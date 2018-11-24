@@ -12,3 +12,12 @@ button.action-button:hover svg {
     fill: black;
     cursor: pointer;
 }
+
+button.danger:hover svg {
+    fill: crimson;
+}
+
+svg.action-icon {
+    position: relative;
+    top: 4px;
+}
