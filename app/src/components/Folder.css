@@ -1,0 +1,40 @@
+li {
+    margin-left: 1.5rem;
+}
+
+span.folder-title {
+    display: block;
+    width: 100%;
+}
+
+span.folder-title:hover {
+    cursor: pointer;
+    -webkit-box-shadow: -2px 4px 4px -4px rgba(189,189,189,1);
+    -moz-box-shadow: -2px 4px 4px -4px rgba(189,189,189,1);
+    box-shadow: -2px 4px 4px -4px rgba(189,189,189,1);
+}
+
+svg.folder-icon {
+    position: relative;
+    top: 3px;
+    margin-right: 0.5rem;
+}
+
+svg.chevron-icon {
+    position: relative;
+    top: 5px;
+}
+
+button.action-button {
+    border: none;
+    outline: none;
+    background: none;
+}
+
+button.action-button svg {
+    fill: gray;
+}
+
+button.action-button:hover svg {
+    fill: black;
+}
