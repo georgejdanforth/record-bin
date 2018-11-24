@@ -25,10 +25,14 @@ const ButtonGroup = (props) => (
         >
             <ButtonIcon path={mdiFolderPlus}/>
         </button>
-        <button className="action-button">
+        <button
+            className="action-button"
+            disabled={props.addTrackDisabled}
+            onClick={props.insertAddTrack}
+        >
             <ButtonIcon path={mdiPlaylistPlus}/>
         </button>
-        { (props.showDelete || true) &&
+        { (props.showDelete || props.showDelete === undefined) &&
             <button
                 className="action-button danger"
                 onClick={props.deleteFolder}

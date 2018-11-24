@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import uuidv4 from 'uuid/v4';
 
-import { ADD_FOLDER, DELETE_FOLDER } from '../actions/directoryTree';
+import {ADD_FOLDER, ADD_TRACK, DELETE_FOLDER} from '../actions/directoryTree';
 
 const getNode = (root, path, depth=0) => depth >= path.length
     ? root
@@ -64,6 +64,8 @@ const directoryTree = (state={
             return addFolder(action);
         case DELETE_FOLDER:
             return deleteFolder(action);
+        case ADD_TRACK:
+            return addTrack(action);
         default:
             return state;
     }

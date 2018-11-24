@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import './Folder.css';
 import AddFolder from './AddFolder';
+import AddTrack from './AddTrack';
 import ButtonGroup from './ButtonGroup';
 import { FolderIcon, ChevronIcon } from './icons';
 
@@ -10,13 +11,16 @@ class Folder extends Component {
 
     state = {
         addingFolder: false,
+        addingTrack: false,
         expanded: false
     };
 
     toggleExpanded = () => this.setState({ expanded: !this.state.expanded });
 
-    insertAddFolder = () => this.setState({ addingFolder: true });
-    cancelAddFolder = () => this.setState({ addingFolder: false });
+    insertAddFolder = () => this.setState({ addingFolder: true, addingTrack: false });
+    cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
+    insertAddTrack = () => this.setState({ addingFolder: false, addingTrack: true });
+    cancelAddTrack = () => this.setState({ addingFolder: false, addingTrack: false });
 
     addFolder = (folderName, path=[]) => this.setState(
         { addingFolder: false },
@@ -54,6 +58,8 @@ class Folder extends Component {
                         <ButtonGroup
                             addFolderDisabled={this.state.addingFolder}
                             insertAddFolder={this.insertAddFolder}
+                            addTrackDisabled={this.state.addingTrack}
+                            insertAddTrack={this.insertAddTrack}
                             deleteFolder={() => this.deleteFolder([])}
                         />
                         <ul>
@@ -64,6 +70,13 @@ class Folder extends Component {
                                         cancelAddFolder={this.cancelAddFolder}
                                     />
                                 </li>
+                            }
+                            { this.state.addingTrack &&
+                            <li>
+                                <AddTrack
+                                    cancelAddTrack={this.cancelAddTrack}
+                                />
+                            </li>
                             }
                             { this.renderFolders() }
                         </ul>

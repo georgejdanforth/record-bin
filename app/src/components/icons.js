@@ -4,6 +4,7 @@ import {
     mdiChevronRight,
     mdiChevronDown,
     mdiFolder,
+    mdiMusic,
 } from '@mdi/js';
 
 import './icons.css';
@@ -23,5 +24,14 @@ export const ChevronIcon = (props) => (
         path={props.expanded ? mdiChevronDown : mdiChevronRight}
         size={0.8}
         color="gray"
+    />
+);
+
+export const MusicIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiMusic}
+        size={0.8}
+        color="lightgray"
     />
 );
