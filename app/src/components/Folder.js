@@ -25,15 +25,21 @@ class Folder extends Component {
 
     deleteFolder = path => this.props.deleteFolder(_.concat([this.props.id], path));
 
-    renderFolders = () => this.props.folders.map(folder => (
-        <li key={folder.id}>
-            <Folder
-                addFolder={this.addFolder}
-                deleteFolder={this.deleteFolder}
-                {...folder}
-            />
-        </li>
-    ));
+    renderFolders = () => this.props
+        .folders
+        .sort((a, b) => {
+            if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
+            if (b.name.toUpperCase() > a.name.toUpperCase()) return -1;
+            return 0;
+        }).map(folder => (
+            <li key={folder.id}>
+                <Folder
+                    addFolder={this.addFolder}
+                    deleteFolder={this.deleteFolder}
+                    {...folder}
+                />
+            </li>
+        ));
 
     render() {
         return (

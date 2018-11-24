@@ -23,15 +23,22 @@ class Root extends Component {
         path
     );
 
-    renderFolders = () => this.props.directoryTree.folders.map(folder => (
-        <li key={folder.id}>
-            <Folder
-                addFolder={this.addFolder}
-                deleteFolder={this.deleteFolder}
-                {...folder}
-            />
-        </li>
-    ));
+    renderFolders = () => this.props
+        .directoryTree
+        .folders
+        .sort((a, b) => {
+            if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
+            if (b.name.toUpperCase() > a.name.toUpperCase()) return -1;
+            return 0;
+        }).map(folder => (
+            <li key={folder.id}>
+                <Folder
+                    addFolder={this.addFolder}
+                    deleteFolder={this.deleteFolder}
+                    {...folder}
+                />
+            </li>
+        ));
 
     render() {
         return (
