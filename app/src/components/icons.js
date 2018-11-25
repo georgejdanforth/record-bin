@@ -5,6 +5,7 @@ import {
     mdiBandcamp,
     mdiChevronRight,
     mdiChevronDown,
+    mdiDelete,
     mdiFolder,
     mdiLoading,
     mdiMusic,
@@ -34,6 +35,13 @@ export const ChevronIcon = (props) => (
     />
 );
 
+export const DeleteIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiDelete}
+        size={0.8}
+    />
+);
 
 export const ErrorIcon = () => (
     <Icon

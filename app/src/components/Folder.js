@@ -35,6 +35,9 @@ class Folder extends Component {
         () => this.props.addTrack(track, _.concat([this.props.id], path))
     );
 
+    deleteTrack = (trackId, path=[]) =>
+        this.props.deleteTrack(trackId, _.concat([this.props.id], path));
+
     renderFolders = () => this.props.folders
         .sort((a, b) => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
@@ -46,6 +49,7 @@ class Folder extends Component {
                     addFolder={this.addFolder}
                     deleteFolder={this.deleteFolder}
                     addTrack={this.addTrack}
+                    deleteTrack={this.deleteTrack}
                     {...folder}
                 />
             </li>
@@ -56,7 +60,14 @@ class Folder extends Component {
             if (a.title.toUpperCase() > b.title.toUpperCase()) return 1;
             if (b.title.toUpperCase() > a.title.toUpperCase()) return -1;
             return 0;
-        }).map(track => <li key={track.id}><Track {...track}/></li>);
+        }).map(track => (
+            <li key={track.id}>
+                <Track
+                    deleteTrack={() => this.deleteTrack(track.id)}
+                    {...track}
+                />
+            </li>
+        ));
 
     render() {
         return (

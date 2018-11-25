@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addFolder, deleteFolder, addTrack } from '../actions/directoryTree';
+import { addFolder, deleteFolder, addTrack, deleteTrack } from '../actions/directoryTree';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
@@ -35,6 +35,12 @@ class Root extends Component {
         () => this.props.addTrack(this.props.directoryTree, path, track)
     );
 
+    deleteTrack = (trackId, path=[]) => this.props.deleteTrack(
+        this.props.directoryTree,
+        path,
+        trackId
+    );
+
     renderFolders = () => this.props.directoryTree.folders
         .sort((a, b) => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
@@ -46,6 +52,7 @@ class Root extends Component {
                     addFolder={this.addFolder}
                     deleteFolder={this.deleteFolder}
                     addTrack={this.addTrack}
+                    deleteTrack={this.deleteTrack}
                     {...folder}
                 />
             </li>
@@ -102,5 +109,6 @@ export default connect(
         addFolder,
         deleteFolder,
         addTrack,
+        deleteTrack,
     }
 )(Root);

@@ -1,6 +1,7 @@
 export const ADD_FOLDER = 'ADD_FOLDER';
 export const DELETE_FOLDER = 'DELETE_FOLDER';
 export const ADD_TRACK = 'ADD_TRACK';
+export const DELETE_TRACK = 'DELETE_TRACK';
 
 export const addFolder = (directoryTree, path, folderName) => ({
     type: ADD_FOLDER,
@@ -20,4 +21,11 @@ export const addTrack = (directoryTree, path, track) => ({
     directoryTree,
     path,
     track
+});
+
+export const deleteTrack = (directoryTree, path, trackId) => ({
+    type: DELETE_TRACK,
+    directoryTree,
+    path,
+    trackId
 });

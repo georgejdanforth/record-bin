@@ -35,3 +35,23 @@ button.play-button:hover svg {
     fill: limegreen;
     cursor: pointer;
 }
+
+button.delete-button {
+    background: none;
+    border: none;
+    outline: none;
+    visibility: hidden;
+}
+
+div.track:hover button.delete-button {
+    visibility: visible;
+}
+
+button.delete-button svg {
+    fill: gray;
+}
+
+button.delete-button:hover svg {
+    fill: crimson;
+    cursor: pointer;
+}

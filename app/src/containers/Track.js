@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './Track.css';
 import {
     BandCampIcon,
+    DeleteIcon,
     MusicIcon,
     PlayIcon,
     SoundCloudIcon,
@@ -56,6 +57,12 @@ class Track extends Component {
                 >
                     { this.props.title }
                 </a>
+                <button
+                    className="delete-button"
+                    onClick={this.props.deleteTrack}
+                >
+                    <DeleteIcon/>
+                </button>
             </div>
         );
     }
