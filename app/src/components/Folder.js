@@ -5,7 +5,7 @@ import './Folder.css';
 import AddFolder from './AddFolder';
 import AddTrack from './AddTrack';
 import ButtonGroup from './ButtonGroup';
-import Track from './Track';
+import Track from '../containers/Track';
 import { FolderIcon, ChevronIcon } from './icons';
 
 class Folder extends Component {

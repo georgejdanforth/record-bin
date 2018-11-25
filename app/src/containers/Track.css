@@ -16,3 +16,22 @@ a.track-title {
 a.track-title:hover {
     text-decoration: underline;
 }
+
+button.play-button {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+button.play-button svg {
+    fill: gray;
+}
+
+button.play-button.playing svg {
+    fill: deepskyblue;
+}
+
+button.play-button:hover svg {
+    fill: limegreen;
+    cursor: pointer;
+}

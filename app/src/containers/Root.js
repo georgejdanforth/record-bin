@@ -5,7 +5,7 @@ import { addFolder, deleteFolder, addTrack } from '../actions/directoryTree';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
-import Track from '../components/Track';
+import Track from './Track';
 import Folder from '../components/Folder';
 
 class Root extends Component {

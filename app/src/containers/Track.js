@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import './Track.css';
 import {
@@ -8,7 +9,8 @@ import {
     SoundCloudIcon,
     SpotifyIcon,
     YoutubeIcon
-} from './icons';
+} from '../components/icons';
+import { changeTrack } from '../actions/player';
 
 class Track extends Component {
 
@@ -27,11 +29,24 @@ class Track extends Component {
         }
     };
 
+    changeTrack = () => this.props.changeTrack({
+        id: this.props.id,
+        url: this.props.url,
+    });
+
     render () {
+        const playButtonClass = 'play-button'
+            + (this.props.player.track.id === this.props.id ? ' playing' : '');
+
         return (
             <div className="track">
                 { this.renderIcon() }
-                <PlayIcon/>
+                <button
+                    className={playButtonClass}
+                    onClick={this.changeTrack}
+                >
+                    <PlayIcon/>
+                </button>
                 <img src={this.props.thumbnailUrl} alt="" height="15" width="15"/>
                 <a
                     className="track-title"
@@ -46,4 +61,6 @@ class Track extends Component {
     }
 }
 
-export default Track;
+const mapStateToProps = state => ({ player: state.player });
+
+export default connect(mapStateToProps, { changeTrack })(Track);
