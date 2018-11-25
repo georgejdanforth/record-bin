@@ -5,6 +5,7 @@ import './Folder.css';
 import AddFolder from './AddFolder';
 import AddTrack from './AddTrack';
 import ButtonGroup from './ButtonGroup';
+import Track from './Track';
 import { FolderIcon, ChevronIcon } from './icons';
 
 class Folder extends Component {
@@ -34,8 +35,7 @@ class Folder extends Component {
         () => this.props.addTrack(track, _.concat([this.props.id], path))
     );
 
-    renderFolders = () => this.props
-        .folders
+    renderFolders = () => this.props.folders
         .sort((a, b) => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
             if (b.name.toUpperCase() > a.name.toUpperCase()) return -1;
@@ -50,6 +50,13 @@ class Folder extends Component {
                 />
             </li>
         ));
+
+    renderTracks = () => this.props.tracks
+        .sort((a, b) => {
+            if (a.title.toUpperCase() > b.title.toUpperCase()) return 1;
+            if (b.title.toUpperCase() > a.title.toUpperCase()) return -1;
+            return 0;
+        }).map(track => <li key={track.id}><Track {...track}/></li>);
 
     render() {
         return (
@@ -87,6 +94,7 @@ class Folder extends Component {
                             }
                             { this.renderFolders() }
                         </ul>
+                        <ul>{ this.renderTracks() }</ul>
                     </div>
                 }
             </div>

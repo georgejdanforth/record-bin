@@ -2,21 +2,25 @@ import React from 'react';
 import { Icon } from '@mdi/react';
 import {
     mdiAlertCircle,
+    mdiBandcamp,
     mdiChevronRight,
     mdiChevronDown,
     mdiFolder,
     mdiLoading,
     mdiMusic,
+    mdiSoundcloud,
+    mdiSpotify,
+    mdiYoutube,
 } from '@mdi/js';
 
 import './icons.css';
 
-export const FolderIcon = () => (
+export const BandCampIcon = () => (
     <Icon
         className="folder-icon"
-        path={mdiFolder}
+        path={mdiBandcamp}
         size={0.8}
-        color="lightgray"
+        color="#629aa9"
     />
 );
 
@@ -29,12 +33,22 @@ export const ChevronIcon = (props) => (
     />
 );
 
+
 export const ErrorIcon = () => (
     <Icon
         className="folder-icon"
         path={mdiAlertCircle}
         size={0.8}
         color="crimson"
+    />
+);
+
+export const FolderIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiFolder}
+        size={0.8}
+        color="lightgray"
     />
 );
 
@@ -54,5 +68,32 @@ export const SpinnerIcon = () => (
         size={0.8}
         color="gray"
         spin={1}
+    />
+);
+
+export const SoundCloudIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiSoundcloud}
+        size={0.8}
+        color="#ff8800"
+    />
+);
+
+export const SpotifyIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiSpotify}
+        size={0.8}
+        color="#1db954"
+    />
+);
+
+export const YoutubeIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiYoutube}
+        size={0.8}
+        color="#ff0000"
     />
 );
