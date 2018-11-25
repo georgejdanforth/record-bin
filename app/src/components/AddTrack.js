@@ -23,7 +23,10 @@ class AddTrack extends Component {
 
     processUrl = url => this.setState({ loading: true }, () =>
         scrape(url)
-            .then(() => this.setState({ loading: false }, this.props.cancelAddTrack))
+            .then(track => this.setState({ loading: false }, () => {
+                this.props.addTrack(track);
+                this.props.cancelAddTrack();
+            }))
             .catch(() => this.setState({ loading: false, error: 'Not a valid URL' }))
     );
 

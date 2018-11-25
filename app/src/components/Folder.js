@@ -29,6 +29,11 @@ class Folder extends Component {
 
     deleteFolder = path => this.props.deleteFolder(_.concat([this.props.id], path));
 
+    addTrack = (track, path=[]) => this.setState(
+        { addingTrack: false },
+        () => this.props.addTrack(track, _.concat([this.props.id], path))
+    );
+
     renderFolders = () => this.props
         .folders
         .sort((a, b) => {
@@ -40,6 +45,7 @@ class Folder extends Component {
                 <Folder
                     addFolder={this.addFolder}
                     deleteFolder={this.deleteFolder}
+                    addTrack={this.addTrack}
                     {...folder}
                 />
             </li>
@@ -74,6 +80,7 @@ class Folder extends Component {
                             { this.state.addingTrack &&
                                 <li>
                                     <AddTrack
+                                        addTrack={this.addTrack}
                                         cancelAddTrack={this.cancelAddTrack}
                                     />
                                 </li>

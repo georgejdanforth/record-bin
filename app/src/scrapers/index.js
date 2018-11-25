@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { isWebUri } from 'valid-url';
+import uuidv4 from 'uuid/v4';
 import _ from 'lodash';
 
 const constructUrl = url => 'http://allorigins.me/get?url=' + encodeURIComponent(url);
@@ -14,45 +15,47 @@ const plaintext = element => element.innerHTML
     .replace(/\s+/g, ' ')
     .trim();
 
+const baseTrackAttributes = (url, mediaType) => ({
+    url,
+    mediaType,
+    id: `track-${uuidv4()}`
+});
+
 const soundcloudHeaders = url => ({ url, format: 'json' });
 
 const scrapeSoundcloud = (url, mediaType) =>
     axios.post('https://soundcloud.com/oembed', soundcloudHeaders(url))
         .then(({ data }) => ({
-            url,
-            mediaType,
             title: data.title,
             thumbnailUrl: data.thumbnail_url,
+            ...baseTrackAttributes(url, mediaType),
         }));
 
 const scrapeYouTube = (url, mediaType) =>
     axios.get(constructUrl(`https://www.youtube.com/oembed?url=${url}&format=json`))
         .then(({ data }) => JSON.parse(data.contents))
         .then(({ thumbnail_url, title }) => ({
-            url,
-            mediaType,
             title,
-            thumbnailUrl: thumbnail_url
+            thumbnailUrl: thumbnail_url,
+            ...baseTrackAttributes(url, mediaType),
         }));
 
 const scrapeSpotify = (url, mediaType) =>
     axios.get(constructUrl(`https://embed.spotify.com/oembed?url=${url}`))
         .then(({ data }) => JSON.parse(data.contents))
         .then(({ thumbnail_url, title }) => ({
-            url,
-            mediaType,
             title,
-            thumbnailUrl: thumbnail_url
+            thumbnailUrl: thumbnail_url,
+            ...baseTrackAttributes(url, mediaType),
         }));
 
 const scrapeBandCamp = (url, mediaType) =>
     axios.get(constructUrl(url))
         .then(parseHtmlResponse)
         .then(document => ({
-            url,
-            mediaType,
             title: plaintext(document.getElementById('name-section')),
-            thumbnailUrl: document.querySelector('#tralbumArt img').src
+            thumbnailUrl: document.querySelector('#tralbumArt img').src,
+            ...baseTrackAttributes(url, mediaType),
         }));
 
 export const mediaTypes = {

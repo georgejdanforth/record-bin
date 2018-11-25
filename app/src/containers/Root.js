@@ -46,6 +46,7 @@ class Root extends Component {
                 <Folder
                     addFolder={this.addFolder}
                     deleteFolder={this.deleteFolder}
+                    addTrack={this.addTrack}
                     {...folder}
                 />
             </li>
@@ -57,6 +58,8 @@ class Root extends Component {
                 <ButtonGroup
                     addFolderDisabled={this.state.addingFolder}
                     insertAddFolder={this.insertAddFolder}
+                    addTrackDisabled={this.state.addingTrack}
+                    insertAddTrack={this.insertAddTrack}
                     showDelete={false}
                 />
                 <ul>
@@ -72,6 +75,7 @@ class Root extends Component {
                     { this.state.addingTrack &&
                         <li>
                             <AddTrack
+                                addTrack={this.addTrack}
                                 cancelAddTrack={this.cancelAddTrack}
                             />
                         </li>
