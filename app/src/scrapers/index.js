@@ -28,24 +28,27 @@ const scrapeSoundcloud = (url, mediaType) =>
         .then(({ data }) => ({
             title: data.title,
             thumbnailUrl: data.thumbnail_url,
+            embedUrl: data.html.match(/src="(.+?)"/)[1],
             ...baseTrackAttributes(url, mediaType),
         }));
 
 const scrapeYouTube = (url, mediaType) =>
     axios.get(constructUrl(`https://www.youtube.com/oembed?url=${url}&format=json`))
         .then(({ data }) => JSON.parse(data.contents))
-        .then(({ thumbnail_url, title }) => ({
+        .then(({ html, thumbnail_url, title }) => ({
             title,
             thumbnailUrl: thumbnail_url,
+            embedUrl: html.match(/src="(.+?)"/)[1],
             ...baseTrackAttributes(url, mediaType),
         }));
 
 const scrapeSpotify = (url, mediaType) =>
     axios.get(constructUrl(`https://embed.spotify.com/oembed?url=${url}`))
         .then(({ data }) => JSON.parse(data.contents))
-        .then(({ thumbnail_url, title }) => ({
+        .then(({ html, thumbnail_url, title }) => ({
             title,
             thumbnailUrl: thumbnail_url,
+            embedUrl: html.match(/src="(.+?)"/)[1],
             ...baseTrackAttributes(url, mediaType),
         }));
 
@@ -55,6 +58,7 @@ const scrapeBandCamp = (url, mediaType) =>
         .then(document => ({
             title: plaintext(document.getElementById('name-section')),
             thumbnailUrl: document.querySelector('#tralbumArt img').src,
+            embedUrl: document.querySelector('.player-container iframe').src,
             ...baseTrackAttributes(url, mediaType),
         }));
 
