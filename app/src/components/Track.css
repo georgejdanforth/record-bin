@@ -1,0 +1,18 @@
+div.track {
+    padding: 0.25rem;
+}
+
+div.track:hover {
+    -webkit-box-shadow: -2px 4px 4px -4px lightgray;
+    -moz-box-shadow: -2px 4px 4px -4px lightgray;
+    box-shadow: -2px 4px 4px -4px lightgray;
+}
+
+a.track-title {
+    color: inherit;
+    margin-left: 0.5rem;
+}
+
+a.track-title:hover {
+    text-decoration: underline;
+}

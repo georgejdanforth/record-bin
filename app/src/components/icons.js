@@ -8,6 +8,7 @@ import {
     mdiFolder,
     mdiLoading,
     mdiMusic,
+    mdiPlayCircleOutline,
     mdiSoundcloud,
     mdiSpotify,
     mdiYoutube,
@@ -58,6 +59,14 @@ export const MusicIcon = () => (
         path={mdiMusic}
         size={0.8}
         color="lightgray"
+    />
+);
+
+export const PlayIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiPlayCircleOutline}
+        size={0.8}
     />
 );
 

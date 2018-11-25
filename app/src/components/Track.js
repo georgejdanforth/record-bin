@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
+import './Track.css';
 import {
     BandCampIcon,
     MusicIcon,
+    PlayIcon,
     SoundCloudIcon,
     SpotifyIcon,
     YoutubeIcon
@@ -27,9 +29,16 @@ class Track extends Component {
 
     render () {
         return (
-            <div>
+            <div className="track">
                 { this.renderIcon() }
-                <a href={this.props.url} target="_blank" rel="noopener noreferrer">
+                <PlayIcon/>
+                <img src={this.props.thumbnailUrl} alt="" height="15" width="15"/>
+                <a
+                    className="track-title"
+                    href={this.props.url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                >
                     { this.props.title }
                 </a>
             </div>
