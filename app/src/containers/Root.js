@@ -5,6 +5,7 @@ import { addFolder, deleteFolder, addTrack } from '../actions/directoryTree';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
+import Track from '../components/Track';
 import Folder from '../components/Folder';
 
 class Root extends Component {
@@ -34,9 +35,7 @@ class Root extends Component {
         () => this.props.addTrack(this.props.directoryTree, path, track)
     );
 
-    renderFolders = () => this.props
-        .directoryTree
-        .folders
+    renderFolders = () => this.props.directoryTree.folders
         .sort((a, b) => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
             if (b.name.toUpperCase() > a.name.toUpperCase()) return -1;
@@ -51,6 +50,13 @@ class Root extends Component {
                 />
             </li>
         ));
+
+    renderTracks = () => this.props.directoryTree.tracks
+        .sort((a, b) => {
+            if (a.title.toUpperCase() > b.title.toUpperCase()) return 1;
+            if (b.title.toUpperCase() > a.title.toUpperCase()) return -1;
+            return 0;
+        }).map(track => <li key={track.id}><Track {...track}/></li>);
 
     render() {
         return (
@@ -82,6 +88,7 @@ class Root extends Component {
                     }
                     { this.renderFolders() }
                 </ul>
+                <ul>{ this.renderTracks() }</ul>
             </div>
         );
     }
