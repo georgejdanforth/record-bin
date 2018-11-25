@@ -9,6 +9,11 @@ const parseHtmlResponse = response => {
     return parser.parseFromString(response.data.contents, 'text/html');
 };
 
+const plaintext = element => element.innerHTML
+    .replace(/\n|<.*?>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
 const soundcloudHeaders = url => ({ url, format: 'json' });
 
 const scrapeSoundcloud = (url, mediaType) =>
@@ -40,7 +45,15 @@ const scrapeSpotify = (url, mediaType) =>
             thumbnailUrl: thumbnail_url
         }));
 
-const scrapeBandCamp = (url, mediaType) => ({ url, mediaType });
+const scrapeBandCamp = (url, mediaType) =>
+    axios.get(constructUrl(url))
+        .then(parseHtmlResponse)
+        .then(document => ({
+            url,
+            mediaType,
+            title: plaintext(document.getElementById('name-section')),
+            thumbnailUrl: document.querySelector('#tralbumArt img').src
+        }));
 
 export const mediaTypes = {
     SOUNDCLOUD: {
@@ -55,7 +68,7 @@ export const mediaTypes = {
     },
     BANDCAMP: {
         value: 'BANDCAMP',
-        urlRegex: /\..+?\.bandcamp\.com\/(album|track)\/[^/]+$/,
+        urlRegex: /.+?\.bandcamp\.com\/(album|track)\/[^/]+$/,
         scrapeFn: scrapeBandCamp,
     },
     YOUTUBE: {
