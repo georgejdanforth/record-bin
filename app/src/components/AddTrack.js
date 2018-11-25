@@ -17,7 +17,9 @@ class AddTrack extends Component {
     handleKeyUp = ({ key }) => {
         switch (key) {
             case 'Enter':
-                scrape(this.state.trackUrl).then(result => console.log(result));
+                scrape(this.state.trackUrl)
+                    .then(result => console.log(result))
+                    .catch(error => console.log(error));
                 break;
             case 'Escape':
                 this.props.cancelAddTrack();
