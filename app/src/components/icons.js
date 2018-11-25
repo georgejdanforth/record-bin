@@ -1,9 +1,11 @@
 import React from 'react';
 import { Icon } from '@mdi/react';
 import {
+    mdiAlertCircle,
     mdiChevronRight,
     mdiChevronDown,
     mdiFolder,
+    mdiLoading,
     mdiMusic,
 } from '@mdi/js';
 
@@ -27,11 +29,30 @@ export const ChevronIcon = (props) => (
     />
 );
 
+export const ErrorIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiAlertCircle}
+        size={0.8}
+        color="crimson"
+    />
+);
+
 export const MusicIcon = () => (
     <Icon
         className="folder-icon"
         path={mdiMusic}
         size={0.8}
         color="lightgray"
+    />
+);
+
+export const SpinnerIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiLoading}
+        size={0.8}
+        color="gray"
+        spin={1}
     />
 );

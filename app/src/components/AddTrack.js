@@ -1,25 +1,36 @@
 import React, { Component } from 'react';
 
 import './AddTrack.css';
-import { MusicIcon } from './icons';
+import { ErrorIcon, MusicIcon, SpinnerIcon} from './icons';
 import { scrape } from '../scrapers';
 
 class AddTrack extends Component {
 
-    state = { trackUrl: null };
+    state = {
+        trackUrl: null,
+        loading: false,
+        error: null,
+    };
 
     componentDidMount() {
         this.input.focus();
     }
 
-    updateTrackUrl = ({ target }) => this.setState({ trackUrl: target.value });
+    updateTrackUrl = ({ target }) => this.setState({
+        trackUrl: target.value,
+        error: null,
+    });
+
+    processUrl = url => this.setState({ loading: true }, () =>
+        scrape(url)
+            .then(() => this.setState({ loading: false }, this.props.cancelAddTrack))
+            .catch(() => this.setState({ loading: false, error: 'Not a valid URL' }))
+    );
 
     handleKeyUp = ({ key }) => {
         switch (key) {
             case 'Enter':
-                scrape(this.state.trackUrl)
-                    .then(result => console.log(result))
-                    .catch(error => console.log(error));
+                this.processUrl(this.state.trackUrl);
                 break;
             case 'Escape':
                 this.props.cancelAddTrack();
@@ -29,12 +40,19 @@ class AddTrack extends Component {
         }
     };
 
+    renderIcon = () => {
+        if (this.state.loading) return <SpinnerIcon/>;
+        if (this.state.error) return <ErrorIcon/>;
+        return <MusicIcon/>;
+    };
+
     render() {
         return (
             <div>
-                <MusicIcon/>
+                { this.renderIcon() }
                 <input
                     className="add-track-input"
+                    disabled={this.state.loading}
                     onBlur={this.props.cancelAddTrack}
                     onChange={this.updateTrackUrl}
                     onKeyUp={this.handleKeyUp}

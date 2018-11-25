@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { addFolder, deleteFolder } from '../actions/directoryTree';
+import { addFolder, deleteFolder, addTrack } from '../actions/directoryTree';
 import AddFolder from '../components/AddFolder';
+import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
 import Folder from '../components/Folder';
 
 class Root extends Component {
 
-    state = { addingFolder: false };
+    state = {
+        addingFolder: false,
+        addingTrack: false,
+    };
 
     insertAddFolder = () => this.setState({ addingFolder: true });
     cancelAddFolder = () => this.setState({ addingFolder: false });
+    insertAddTrack = () => this.setState({ addingFolder: false, addingTrack: true });
+    cancelAddTrack = () => this.setState({ addingFolder: false, addingTrack: false });
 
     addFolder = (folderName, path=[]) => this.setState(
         { addingFolder: false },
@@ -21,6 +27,11 @@ class Root extends Component {
     deleteFolder = path => this.props.deleteFolder(
         this.props.directoryTree,
         path
+    );
+
+    addTrack = (track, path=[]) => this.setState(
+        { addingTrack: false },
+        () => this.props.addTrack(this.props.directoryTree, path, track)
     );
 
     renderFolders = () => this.props
@@ -58,6 +69,13 @@ class Root extends Component {
                         </li>
 
                     }
+                    { this.state.addingTrack &&
+                        <li>
+                            <AddTrack
+                                cancelAddTrack={this.cancelAddTrack}
+                            />
+                        </li>
+                    }
                     { this.renderFolders() }
                 </ul>
             </div>
@@ -71,6 +89,7 @@ export default connect(
     mapStateToProps,
     {
         addFolder,
-        deleteFolder
+        deleteFolder,
+        addTrack,
     }
 )(Root);

@@ -72,11 +72,11 @@ class Folder extends Component {
                                 </li>
                             }
                             { this.state.addingTrack &&
-                            <li>
-                                <AddTrack
-                                    cancelAddTrack={this.cancelAddTrack}
-                                />
-                            </li>
+                                <li>
+                                    <AddTrack
+                                        cancelAddTrack={this.cancelAddTrack}
+                                    />
+                                </li>
                             }
                             { this.renderFolders() }
                         </ul>

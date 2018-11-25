@@ -79,14 +79,14 @@ export const mediaTypes = {
 };
 
 const validateUrl = url => new Promise((resolve, reject) => {
-    if (!isWebUri(url)) reject('Not a valid URL.');
+    if (!isWebUri(url)) reject();
 
     const mediaTypeInfo = _.find(mediaTypes, info => info.urlRegex.test(url));
 
     if (mediaTypeInfo !== undefined) {
         resolve({ url, mediaType: mediaTypeInfo.value, scrapeFn: mediaTypeInfo.scrapeFn});
     } else {
-        reject('Not a valid URL.');
+        reject();
     }
 });
 
