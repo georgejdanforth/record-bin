@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import './AddTrack.css';
 import { MusicIcon } from './icons';
+import { scrape } from '../scrapers';
 
 class AddTrack extends Component {
 
@@ -13,6 +14,19 @@ class AddTrack extends Component {
 
     updateTrackUrl = ({ target }) => this.setState({ trackUrl: target.value });
 
+    handleKeyUp = ({ key }) => {
+        switch (key) {
+            case 'Enter':
+                scrape(this.state.trackUrl).then(result => console.log(result));
+                break;
+            case 'Escape':
+                this.props.cancelAddTrack();
+                break;
+            default:
+                return;
+        }
+    };
+
     render() {
         return (
             <div>
@@ -21,6 +35,7 @@ class AddTrack extends Component {
                     className="add-track-input"
                     onBlur={this.props.cancelAddTrack}
                     onChange={this.updateTrackUrl}
+                    onKeyUp={this.handleKeyUp}
                     placeholder="Track URL"
                     ref={input => this.input = input}
                     type="text"
