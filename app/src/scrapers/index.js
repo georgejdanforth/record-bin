@@ -16,13 +16,30 @@ const scrapeSoundcloud = (url, mediaType) =>
         .then(({ data }) => ({
             url,
             mediaType,
-            artistName: data.author_name,
-            title: data.title.replace(` by ${data.author_name}`, ''),
+            title: data.title,
             thumbnailUrl: data.thumbnail_url,
         }));
 
-const scrapeYouTube = (url, mediaType) => ({ url, mediaType });
-const scrapeSpotify = (url, mediaType) => ({ url, mediaType });
+const scrapeYouTube = (url, mediaType) =>
+    axios.get(constructUrl(`https://www.youtube.com/oembed?url=${url}&format=json`))
+        .then(({ data }) => JSON.parse(data.contents))
+        .then(({ thumbnail_url, title }) => ({
+            url,
+            mediaType,
+            title,
+            thumbnailUrl: thumbnail_url
+        }));
+
+const scrapeSpotify = (url, mediaType) =>
+    axios.get(constructUrl(`https://embed.spotify.com/oembed?url=${url}`))
+        .then(({ data }) => JSON.parse(data.contents))
+        .then(({ thumbnail_url, title }) => ({
+            url,
+            mediaType,
+            title,
+            thumbnailUrl: thumbnail_url
+        }));
+
 const scrapeBandCamp = (url, mediaType) => ({ url, mediaType });
 
 export const mediaTypes = {
