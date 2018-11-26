@@ -32,6 +32,8 @@ class Track extends Component {
 
     changeTrack = () => this.props.changeTrack({
         id: this.props.id,
+        embedUrl: this.props.embedUrl,
+        mediaType: this.props.mediaType,
         url: this.props.url,
     });
 

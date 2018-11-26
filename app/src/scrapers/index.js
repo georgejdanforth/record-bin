@@ -58,7 +58,10 @@ const scrapeBandCamp = (url, mediaType) =>
         .then(document => ({
             title: plaintext(document.getElementById('name-section')),
             thumbnailUrl: document.querySelector('#tralbumArt img').src,
-            embedUrl: document.querySelector('.player-container iframe').src,
+            embedUrl: _.find(
+                document.getElementsByTagName('meta'),
+                meta => /EmbeddedPlayer/.test(meta.content)
+            ).content,
             ...baseTrackAttributes(url, mediaType),
         }));
 

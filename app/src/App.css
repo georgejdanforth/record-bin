@@ -1,0 +1,17 @@
+.is-fullheight {
+    min-height: 100vh;
+    max-height: 100vh;
+    height: 100vh;
+    flex-direction: row;
+    justify-content: stretch;
+    overflow-y: auto;
+}
+
+div.player {
+    display: block;
+    position: sticky;
+    float: right;
+    max-width: 300px;
+    top: calc(100vh - 120px);
+    right: 5px;
+}

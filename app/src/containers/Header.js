@@ -9,7 +9,6 @@ import {
 } from 'bloomer';
 
 import './Header.css';
-import Player from '../components/Player';
 
 class Header extends Component {
 
@@ -20,7 +19,7 @@ class Header extends Component {
                 <NavbarMenu>
                     <NavbarEnd>
                         <NavbarItem>
-                            <Player {...this.props.player.track}/>
+                            Settings
                         </NavbarItem>
                     </NavbarEnd>
                 </NavbarMenu>
