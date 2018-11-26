@@ -60,7 +60,8 @@ class Track extends Component {
                     { this.props.title }
                 </a>
                 <button
-                    className="delete-button"
+                    className="delete-button tooltip"
+                    data-tooltip="Delete track"
                     onClick={this.props.deleteTrack}
                 >
                     <DeleteIcon/>

@@ -21,3 +21,23 @@ svg.action-icon {
     position: relative;
     top: 4px;
 }
+
+span.confirm-delete-buttons {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+button.confirm-delete-button {
+    background: none;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 3px;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    width: 3rem;
+}
+
+button.confirm-delete-button:hover {
+    cursor: pointer;
+    background: lightgray;
+}
