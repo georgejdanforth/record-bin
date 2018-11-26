@@ -7,11 +7,14 @@
     overflow-y: auto;
 }
 
+.container {
+    margin-top: 55px;
+}
+
 div.player {
-    display: block;
-    position: sticky;
     float: right;
-    max-width: 300px;
-    top: calc(100vh - 120px);
     right: 5px;
+    position: fixed;
+    bottom: 0;
+    z-index: 9999;
 }

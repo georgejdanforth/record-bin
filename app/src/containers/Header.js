@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 import {
     Navbar,
     NavbarBrand,
-    NavbarEnd,
     NavbarItem,
-    NavbarMenu,
 } from 'bloomer';
 
 import './Header.css';
@@ -14,15 +12,13 @@ class Header extends Component {
 
     render() {
         return (
-            <Navbar className="header">
-                <NavbarBrand>Record Bin</NavbarBrand>
-                <NavbarMenu>
-                    <NavbarEnd>
-                        <NavbarItem>
-                            Settings
-                        </NavbarItem>
-                    </NavbarEnd>
-                </NavbarMenu>
+            <Navbar className="header is-fixed-top">
+                <NavbarBrand>
+                    <NavbarItem>
+                        <img src={require('../assets/recordbin-logo.png')} alt="logo"/>
+                        <span style={{ 'margin-left': '1rem'}}>Record Bin</span>
+                    </NavbarItem>
+                </NavbarBrand>
             </Navbar>
         );
     }
