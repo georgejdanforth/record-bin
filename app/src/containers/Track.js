@@ -38,8 +38,11 @@ class Track extends Component {
     });
 
     render () {
-        const playButtonClass = 'play-button'
-            + (this.props.player.track.id === this.props.id ? ' playing' : '');
+        const playButtonClass = 'play-button' + (
+            this.props.player.track && this.props.player.track.id === this.props.id
+                ? ' playing'
+                : ''
+        );
 
         return (
             <div className="track">

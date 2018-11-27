@@ -63,7 +63,14 @@ class Root extends Component {
             if (a.title.toUpperCase() > b.title.toUpperCase()) return 1;
             if (b.title.toUpperCase() > a.title.toUpperCase()) return -1;
             return 0;
-        }).map(track => <li key={track.id}><Track {...track}/></li>);
+        }).map(track => (
+            <li key={track.id}>
+                <Track
+                    deleteTrack={() => this.deleteTrack(track.id)}
+                    {...track}
+                />
+            </li>
+        ));
 
     render() {
         return (

@@ -1,18 +1,22 @@
 import { createStore, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
-// import createChromeStorage from 'redux-persist-chrome-storage';
+import createCompressor from 'redux-persist-transform-compress';
+import createChromeStorage from 'redux-persist-chrome-storage';
 import storage from 'redux-persist/lib/storage';
-
 
 import rootReducer from '../reducers';
 
-
-// const storage = createChromeStorage(window.chrome, 'sync');
+const compressor = createCompressor({ whitelist: ['directoryTree'] });
 
 const persistConfig = {
     key: 'root',
-    storage
+    whitelist: 'directoryTree',
+    transforms: [compressor],
+    storage: process.env.NODE_ENV === 'development'
+        ? storage
+        : createChromeStorage(window.chrome, 'sync'),
 };
+
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
