@@ -59,7 +59,7 @@ class AddTrack extends Component {
                     onBlur={this.props.cancelAddTrack}
                     onChange={this.updateTrackUrl}
                     onKeyUp={this.handleKeyUp}
-                    placeholder="Track URL"
+                    placeholder="Track URL. Hit Enter to save."
                     ref={input => this.input = input}
                     type="text"
                 />

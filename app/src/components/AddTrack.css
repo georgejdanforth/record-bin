@@ -3,4 +3,5 @@ input.add-track-input {
     outline: none;
     font-size: inherit;
     font-style: italic;
+    min-width: 20rem;
 }

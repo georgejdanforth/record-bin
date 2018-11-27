@@ -13,7 +13,11 @@
     "https://yotube.com/*",
     "https://*.soundcloud.com/*"
   ],
-  "page_action": {
+  "background": {
+    "scripts": ["scripts/background.js"],
+    "persistent": false
+  },
+  "browser_action": {
     "default_icon": {
       "16": "images/record-bin-icon-16.png",
       "32": "images/record-bin-icon-32.png",

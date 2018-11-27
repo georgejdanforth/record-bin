@@ -37,7 +37,7 @@ class AddFolder extends Component {
                     onBlur={this.props.cancelAddFolder}
                     onChange={this.updateFolderName}
                     onKeyUp={this.handleKeyUp}
-                    placeholder="New Folder"
+                    placeholder="New Folder. Hit Enter to save."
                     ref={input => this.input = input}
                     type="text"
                 />

@@ -14,7 +14,7 @@ const persistConfig = {
     transforms: [compressor],
     storage: process.env.NODE_ENV === 'development'
         ? storage
-        : createChromeStorage(window.chrome, 'sync'),
+        : createChromeStorage(window.chrome, 'local'),
 };
 
 
