@@ -3,7 +3,6 @@
 
     const buttonClasses = [
         'sc-button',
-        'sc-button-small',
         'sc-button-responsive',
         'rb-button'
     ];
@@ -24,10 +23,12 @@
         return img;
     };
 
-    const createButton = url => {
+    const getButtonClasses = size => [`sc-button-${size}`, ...buttonClasses];
+
+    const createButton = (url, size) => {
         const button = document.createElement('button');
         button.type = 'button';
-        buttonClasses.forEach(className => button.classList.add(className));
+        getButtonClasses(size).forEach(className => button.classList.add(className));
         button.addEventListener('click', () => openOptionsPage(url));
 
         button.appendChild(createIcon());
@@ -42,9 +43,13 @@
             if (!button) {
                 const url = listItems[i].querySelector('a.soundTitle__title').href;
                 const buttonGroup = listItems[i].querySelector('div.sc-button-group');
-                buttonGroup.append(createButton(url));
+                buttonGroup.append(createButton(url, 'small'));
             }
         }
+
+        const buttonGroup = document.querySelector('div.soundActions div.sc-button-group');
+        const button = buttonGroup.querySelector('button.rb-button');
+        if (!button) buttonGroup.append(createButton(window.location.href, 'medium'));
     };
 
     (() => setInterval(insertRecordBinButtons, 500))();

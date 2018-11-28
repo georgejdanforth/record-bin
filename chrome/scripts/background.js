@@ -1,7 +1,9 @@
 const openOrFocusOptionsPage = url => {
 
     const optionsUrl = chrome.runtime.getURL('index.html');
-    const sendUrl = tab => { if (url) chrome.tabs.sendMessage(tab.id, { url }); };
+    const sendUrl = tab => setTimeout(() => {
+        if (url) chrome.tabs.sendMessage(tab.id, { url });
+    }, 1000);
 
     chrome.tabs.query({ url: optionsUrl }, tabs => {
         if (tabs.length) {

@@ -19,7 +19,9 @@ class Root extends Component {
 
     componentDidMount() {
         chrome.runtime.onMessage.addListener(
-            (request, sender, sendResponse) => console.log(request.url)
+            (request, sender, sendResponse) => scrape(request.url)
+                .then(this.addTrack)
+                .catch(error => console.log(error))
         );
     }
 
