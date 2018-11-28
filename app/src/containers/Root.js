@@ -1,7 +1,9 @@
+/* global chrome */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { addFolder, deleteFolder, addTrack, deleteTrack } from '../actions/directoryTree';
+import { scrape } from '../scrapers';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
@@ -15,10 +17,16 @@ class Root extends Component {
         addingTrack: false,
     };
 
-    insertAddFolder = () => this.setState({ addingFolder: true });
-    cancelAddFolder = () => this.setState({ addingFolder: false });
+    componentDidMount() {
+        chrome.runtime.onMessage.addListener(
+            (request, sender, sendResponse) => console.log(request.url)
+        );
+    }
+
+    insertAddFolder = () => this.setState({ addingFolder: true, addingTrack: false });
+    cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
     insertAddTrack = () => this.setState({ addingFolder: false, addingTrack: true });
-    cancelAddTrack = () => this.setState({ addingFolder: false, addingTrack: false });
+    cancelAddTrack = () => this.setState({addingFolder: false, addingTrack: false });
 
     addFolder = (folderName, path=[]) => this.setState(
         { addingFolder: false },

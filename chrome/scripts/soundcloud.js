@@ -10,6 +10,9 @@
 
     /* eslint-disable no-undef */
     const iconUrl = chrome.runtime.getURL('images/record-bin-icon-16.png');
+    const optionsUrl = chrome.runtime.getURL('index.html');
+
+    const openOptionsPage = url => chrome.runtime.sendMessage({ url });
     /* eslint-enable no-undef */
 
     const createIcon = () => {
@@ -25,7 +28,7 @@
         const button = document.createElement('button');
         button.type = 'button';
         buttonClasses.forEach(className => button.classList.add(className));
-        button.addEventListener('click', () => console.log(url));
+        button.addEventListener('click', () => openOptionsPage(url));
 
         button.appendChild(createIcon());
 

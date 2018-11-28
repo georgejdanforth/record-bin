@@ -1,19 +1,23 @@
-const openOrFocusOptionsPage = () => {
-    const optionsUrl = chrome.extension.getURL('index.html');
-    chrome.tabs.query({}, extensionTabs => {
-        for (let tab in extensionTabs) {
-            if (optionsUrl === tab.url) {
-                chrome.tabs.update(tab.id, { 'selected': true });
-                return;
-            }
-        }
+const openOrFocusOptionsPage = url => {
 
-        chrome.tabs.create({ url: 'index.html' });
+    const optionsUrl = chrome.runtime.getURL('index.html');
+    const sendUrl = tab => { if (url) chrome.tabs.sendMessage(tab.id, { url }); };
+
+    chrome.tabs.query({ url: optionsUrl }, tabs => {
+        if (tabs.length) {
+            chrome.tabs.update(tabs[0].id, { 'highlighted': true, url: optionsUrl }, sendUrl);
+        } else {
+            chrome.tabs.create({ url: optionsUrl }, sendUrl);
+        }
     });
 };
 
 chrome.extension.onConnect.addListener(
-    port => port.onMessage.addListener(openOrFocusOptionsPage)
+    port => port.onMessage.addListener(() => openOrFocusOptionsPage(null))
 );
 
-chrome.browserAction.onClicked.addListener(openOrFocusOptionsPage);
+chrome.browserAction.onClicked.addListener(() => openOrFocusOptionsPage(null));
+
+chrome.runtime.onMessage.addListener(
+    (request, sender, sendResponse) => openOrFocusOptionsPage(request.url)
+);
