@@ -78,13 +78,13 @@ export const PlayIcon = () => (
     />
 );
 
-export const SpinnerIcon = () => (
+export const SpinnerIcon = (props) => (
     <Icon
         className="folder-icon"
         path={mdiLoading}
-        size={0.8}
-        color="gray"
-        spin={1}
+        size={props.size || 0.8}
+        color={props.color || 'gray'}
+        spin={props.spin || 1}
     />
 );
 

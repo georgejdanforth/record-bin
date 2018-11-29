@@ -7,21 +7,27 @@ import { scrape } from '../scrapers';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
-import Track from './Track';
 import Folder from '../components/Folder';
+import LoadingOverlay from '../components/LoadingOverlay';
+import Track from './Track';
 
 class Root extends Component {
 
     state = {
         addingFolder: false,
         addingTrack: false,
+        loading: false,
     };
 
     componentDidMount() {
         chrome.runtime.onMessage.addListener(
-            (request, sender, sendResponse) => scrape(request.url)
-                .then(this.addTrack)
-                .catch(error => console.log(error))
+            (request, sender, sendResponse) =>
+                this.setState({ loading: true }, () =>
+                    scrape(request.url)
+                        .then(track =>
+                            this.setState({ loading: false }, () =>
+                                this.addTrack(track)))
+                        .catch(error => console.log(error)))
         );
     }
 
@@ -113,6 +119,7 @@ class Root extends Component {
                     { this.renderFolders() }
                 </ul>
                 <ul>{ this.renderTracks() }</ul>
+                { this.state.loading && <LoadingOverlay/> }
             </div>
         );
     }
