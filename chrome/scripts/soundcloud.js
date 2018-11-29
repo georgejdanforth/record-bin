@@ -48,8 +48,10 @@
         }
 
         const buttonGroup = document.querySelector('div.soundActions div.sc-button-group');
-        const button = buttonGroup.querySelector('button.rb-button');
-        if (!button) buttonGroup.append(createButton(window.location.href, 'medium'));
+        if (buttonGroup){
+            const button = buttonGroup.querySelector('button.rb-button');
+            if (!button) buttonGroup.append(createButton(window.location.href, 'medium'));
+        }
     };
 
     (() => setInterval(insertRecordBinButtons, 500))();
