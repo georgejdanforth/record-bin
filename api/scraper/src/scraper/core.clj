@@ -38,15 +38,40 @@
     #(if-let [[full domain & others]  %] (keyword domain))
     (map #(re-find % media-url) media-type-regexes)))
 
+(defn parse-oembed [response]
+  (-> response
+      :body
+      json/read-str
+      ((fn [body]
+         {:title (get body "title")
+          :thumbnailUrl (get body "thumbnail_url")
+          :embedUrl (last (re-find #"src=\"(.+?)\"" (get body "html")))}))))
+
+(defn scrape-soundcloud [request-url media-url]
+  (parse-oembed
+    (http/post
+      request-url
+      {:headers {"Content-Type" "application/json"}
+       :body (json/write-str {:url media-url :format "json"})})))
+
+(defn scrape-spotify [request-url]
+  (parse-oembed (http/get request-url)))
+
+(defn scrape-youtube [request-url]
+  (parse-oembed (http/get request-url)))
+
 (defn scrape [media-type media-url]
-  (let [request-url (construct-request-url media-type media-url)] request-url))
+  (let [request-url (construct-request-url media-type media-url)] 
+    (case media-type
+      :bandcamp media-url
+      :soundcloud (scrape-soundcloud request-url media-url)
+      :spotify (scrape-spotify request-url)
+      :youtube (scrape-youtube request-url))))
 
 (defn handle [event]
-  (println (get-media-url event))
-  (println (get-media-type (get-media-url event)))
   (if-let [media-url (get-media-url event)]
     (if-let [media-type (get-media-type media-url)]
-      {:url (scrape media-type media-url)}
+      (scrape media-type media-url)
       :bad-url!)
     :no-url!))
 
