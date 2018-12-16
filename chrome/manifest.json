@@ -37,6 +37,12 @@
      ],
      "run_at": "document_end",
      "js": ["scripts/bandcamp.js"]
+   },
+   {
+     "matches": ["https://*.youtube.com/watch*"],
+     "run_at": "document_end",
+     "css": ["css/youtube.css"],
+     "js": ["scripts/youtube.js"]
    }
   ],
   "icons": {

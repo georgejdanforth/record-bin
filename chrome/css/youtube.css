@@ -1,0 +1,24 @@
+div.add-rb button {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    outline: none;
+    border: 1px solid lightgrey;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+div.add-rb button:hover {
+    cursor: pointer;
+}
+
+div.add-rb img {
+    position:absolute;
+    top: 50%;
+    left:50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
