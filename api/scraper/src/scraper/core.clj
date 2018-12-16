@@ -2,7 +2,10 @@
   (:require [uswitch.lambada.core :refer [deflambdafn]]
             [clojure.data.json :as json]
             [clojure.java.io :as io]
-            [clj-http.client :as http]))
+            [clojure.string :as string]
+            [clj-http.client :as http]
+            [hickory.core :refer [as-hickory parse]]
+            [hickory.select :as s]))
 
 (def media-type-regexes
   [#"(soundcloud)\.com\/[^/]+?(?:\/sets)?\/[^/]+$"
@@ -47,6 +50,26 @@
           :thumbnailUrl (get body "thumbnail_url")
           :embedUrl (last (re-find #"src=\"(.+?)\"" (get body "html")))}))))
 
+(defn plaintext [s] (-> s (string/replace #"\s+" " ") string/trim))
+
+(defn get-text-content
+  ([node] (apply str (reduce get-text-content [] (node :content))))
+  ([coll node] (conj coll (if (string? node) node (get-text-content node)))))
+
+(defn scrape-bandcamp [request-url]
+  (let [site-htree (-> (http/get request-url) :body parse as-hickory)]
+    {:title
+     (-> (s/select (s/id :name-section) site-htree)
+         first get-text-content plaintext)
+     :thumbnailUrl
+     (-> (s/select (s/child (s/id :tralbumArt) (s/tag :a) (s/tag :img)) site-htree)
+         first :attrs :src)
+     :embedUrl
+     (-> (filter
+           #(string/includes? % "EmbeddedPlayer")
+           (map #(get-in % [:attrs :content]) (s/select (s/tag :meta) site-htree)))
+         first)}))
+
 (defn scrape-soundcloud [request-url media-url]
   (parse-oembed
     (http/post
@@ -63,7 +86,7 @@
 (defn scrape [media-type media-url]
   (let [request-url (construct-request-url media-type media-url)] 
     (case media-type
-      :bandcamp media-url
+      :bandcamp (scrape-bandcamp request-url)
       :soundcloud (scrape-soundcloud request-url media-url)
       :spotify (scrape-spotify request-url)
       :youtube (scrape-youtube request-url))))
