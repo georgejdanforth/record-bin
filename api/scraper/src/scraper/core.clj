@@ -96,7 +96,8 @@
 (defn construct-response [status body]
   {:statusCode status
    :body (json/write-str body)
-   :headers {"Content-Type" "application/json"}
+   :headers {"Content-Type" "application/json"
+             "Access-Control-Allow-Origin" "*"}
    :isBase64Encoded false})
 
 (defn handle [event]
