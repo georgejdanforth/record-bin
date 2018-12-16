@@ -85,18 +85,26 @@
 
 (defn scrape [media-type media-url]
   (let [request-url (construct-request-url media-type media-url)] 
-    (case media-type
-      :bandcamp (scrape-bandcamp request-url)
-      :soundcloud (scrape-soundcloud request-url media-url)
-      :spotify (scrape-spotify request-url)
-      :youtube (scrape-youtube request-url))))
+    (assoc
+      (case media-type
+        :bandcamp (scrape-bandcamp request-url)
+        :soundcloud (scrape-soundcloud request-url media-url)
+        :spotify (scrape-spotify request-url)
+        :youtube (scrape-youtube request-url))
+      :url media-url :mediaType (.toUpperCase (name media-type)))))
+
+(defn construct-response [status body]
+  {:statusCode status
+   :body (json/write-str body)
+   :headers {"Content-Type" "application/json"}
+   :isBase64Encoded false})
 
 (defn handle [event]
   (if-let [media-url (get-media-url event)]
     (if-let [media-type (get-media-type media-url)]
-      (scrape media-type media-url)
-      :bad-url!)
-    :no-url!))
+      (construct-response 200 (scrape media-type media-url))
+      (construct-response 400 {:error "Invalid URL."}))
+    (construct-response 400 {:error "No URL supplied."})))
 
 (deflambdafn scraper.core.RecordBinScraper 
   [in out context]
