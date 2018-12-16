@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { addFolder, deleteFolder, addTrack, deleteTrack } from '../actions/directoryTree';
-import { scrape } from '../scrapers';
+import { scrape } from '../utils';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';

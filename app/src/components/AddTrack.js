@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import './AddTrack.css';
 import { ErrorIcon, MusicIcon, SpinnerIcon} from './icons';
-import { scrape } from '../scrapers';
+import { scrape } from '../utils';
 
 class AddTrack extends Component {
 
