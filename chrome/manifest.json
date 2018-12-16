@@ -40,5 +40,5 @@
     "images/record-bin-icon-16.png"
   ],
   "options_page": "index.html",
-  "content_security_policy": "default-src 'self'; script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; style-src * 'unsafe-inline'; img-src 'self' data: https://*.scdn.co https://*.sndcdn.com http://*.sndcdn.com https://*.bcbits.com https://*.ytimg.com; connect-src http://allorigins.me https://*.spotify.com https://soundcloud.com https://*.soundcloud.com https://*.bandcamp.com https://youtube.com; frame-src https://*.spotify.com https://*.soundcloud.com https://*.youtube.com https://*.bandcamp.com https://bandcamp.com https://youtube.com"
+  "content_security_policy": "default-src 'self'; script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; style-src * 'unsafe-inline'; img-src 'self' data: https://*.scdn.co https://*.sndcdn.com http://*.sndcdn.com https://*.bcbits.com https://*.ytimg.com; connect-src http://*.recordb.in https://*.spotify.com https://soundcloud.com https://*.soundcloud.com https://*.bandcamp.com https://youtube.com; frame-src https://*.spotify.com https://*.soundcloud.com https://*.youtube.com https://*.bandcamp.com https://bandcamp.com https://youtube.com"
 }

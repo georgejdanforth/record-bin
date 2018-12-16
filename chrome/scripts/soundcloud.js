@@ -47,7 +47,17 @@
             }
         }
 
-        const buttonGroup = document.querySelector('div.soundActions div.sc-button-group');
+        const playlistItems = document.getElementsByClassName('systemPlaylistTrackList__item');
+        for (let i = 0; i < playlistItems.length; i++) {
+            const button = playlistItems[i].querySelector('button.rb-button');
+            if (!button) {
+                const url = playlistItems[i].querySelector('a.trackItem__trackTitle').href;
+                const buttonGroup = playlistItems[i].querySelector('div.sc-button-group');
+                buttonGroup.append(createButton(url, 'small'));
+            }
+        }
+
+        const buttonGroup = document.querySelector('div.listenEngagement__actions div.sc-button-group');
         if (buttonGroup){
             const button = buttonGroup.querySelector('button.rb-button');
             if (!button) buttonGroup.append(createButton(window.location.href, 'medium'));
