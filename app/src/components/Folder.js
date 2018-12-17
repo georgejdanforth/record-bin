@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { DropTarget } from 'react-dnd';
 import _ from 'lodash';
 
 import './Folder.css';
@@ -7,6 +8,18 @@ import AddTrack from './AddTrack';
 import ButtonGroup from './ButtonGroup';
 import Track from '../containers/Track';
 import { FolderIcon, ChevronIcon } from './icons';
+import { ItemTypes } from '../dnd/itemTypes';
+
+const folderTarget = {
+    drop(props) {
+        console.log(props);
+    }
+};
+
+const collect = (connect, monitor) => ({
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+});
 
 class Folder extends Component {
 
@@ -70,8 +83,11 @@ class Folder extends Component {
         ));
 
     render() {
-        return (
-            <div>
+
+        const folderClass = this.props.isOver ? 'is-over' : '';
+
+        return this.props.connectDropTarget(
+            <div className={folderClass}>
                 <span className="folder-title" onClick={this.toggleExpanded}>
                     <FolderIcon/>
                     { this.props.name }
@@ -113,4 +129,4 @@ class Folder extends Component {
     }
 }
 
-export default Folder;
+export default DropTarget(ItemTypes.TRACK, folderTarget, collect)(Folder);

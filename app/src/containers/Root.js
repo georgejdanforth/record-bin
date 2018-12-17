@@ -1,7 +1,5 @@
 /* global chrome */
 import React, { Component } from 'react';
-import { DragDropContextProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 
 import { addFolder, deleteFolder, addTrack, deleteTrack } from '../actions/directoryTree';
@@ -92,7 +90,7 @@ class Root extends Component {
 
     render() {
         return (
-            <DragDropContextProvider backend={HTML5Backend}>
+            <div>
                 <ButtonGroup
                     addFolderDisabled={this.state.addingFolder}
                     insertAddFolder={this.insertAddFolder}
@@ -122,7 +120,7 @@ class Root extends Component {
                 </ul>
                 <ul>{ this.renderTracks() }</ul>
                 { this.state.loading && <LoadingOverlay/> }
-            </DragDropContextProvider>
+            </div>
         );
     }
 }
