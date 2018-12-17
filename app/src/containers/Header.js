@@ -16,7 +16,7 @@ class Header extends Component {
                 <NavbarBrand>
                     <NavbarItem>
                         <img src={require('../assets/recordbin-logo.png')} alt="logo"/>
-                        <span style={{ 'margin-left': '1rem'}}>Record Bin</span>
+                        <span style={{ marginLeft: '1rem'}}>Record Bin</span>
                     </NavbarItem>
                 </NavbarBrand>
             </Navbar>

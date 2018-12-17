@@ -1,5 +1,7 @@
 /* global chrome */
 import React, { Component } from 'react';
+import { DragDropContextProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
 
 import { addFolder, deleteFolder, addTrack, deleteTrack } from '../actions/directoryTree';
@@ -19,17 +21,17 @@ class Root extends Component {
         loading: false,
     };
 
-    componentDidMount() {
-        chrome.runtime.onMessage.addListener(
-            (request, sender, sendResponse) =>
-                this.setState({ loading: true }, () =>
-                    scrape(request.url)
-                        .then(track =>
-                            this.setState({ loading: false }, () =>
-                                this.addTrack(track)))
-                        .catch(error => console.log(error)))
-        );
-    }
+    // componentDidMount() {
+    //     chrome.runtime.onMessage.addListener(
+    //         (request, sender, sendResponse) =>
+    //             this.setState({ loading: true }, () =>
+    //                 scrape(request.url)
+    //                     .then(track =>
+    //                         this.setState({ loading: false }, () =>
+    //                             this.addTrack(track)))
+    //                     .catch(error => console.log(error)))
+    //     );
+    // }
 
     insertAddFolder = () => this.setState({ addingFolder: true, addingTrack: false });
     cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
@@ -90,7 +92,7 @@ class Root extends Component {
 
     render() {
         return (
-            <div>
+            <DragDropContextProvider backend={HTML5Backend}>
                 <ButtonGroup
                     addFolderDisabled={this.state.addingFolder}
                     insertAddFolder={this.insertAddFolder}
@@ -120,7 +122,7 @@ class Root extends Component {
                 </ul>
                 <ul>{ this.renderTracks() }</ul>
                 { this.state.loading && <LoadingOverlay/> }
-            </div>
+            </DragDropContextProvider>
         );
     }
 }

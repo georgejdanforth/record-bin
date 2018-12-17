@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { DragSource } from 'react-dnd';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import './Track.css';
 import {
@@ -11,11 +13,24 @@ import {
     SpotifyIcon,
     YoutubeIcon
 } from '../components/icons';
+import { ItemTypes } from '../dnd/itemTypes';
 import { changeTrack } from '../actions/player';
+
+const trackSource = {
+    beginDrag(props) {
+        return { trackId: props.id };
+    }
+};
+
+const collect = (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
+    isDragging: monitor.isDragging()
+});
 
 class Track extends Component {
 
-    renderIcon = () => {
+    getMediaTypeIcon = () => {
         switch (this.props.mediaType) {
             case 'BANDCAMP':
                 return <BandCampIcon/>;
@@ -29,6 +44,10 @@ class Track extends Component {
                 return <MusicIcon/>;
         }
     };
+
+    renderIcon = () => this.props.connectDragSource(
+        <span className="drag-handle">{ this.getMediaTypeIcon() }</span>
+    );
 
     changeTrack = () => this.props.changeTrack({
         id: this.props.id,
@@ -44,8 +63,10 @@ class Track extends Component {
                 : ''
         );
 
-        return (
-            <div className="track">
+        const trackClass = 'track' + (this.props.isDragging ? ' dragging' : '');
+
+        return this.props.connectDragPreview(
+            <div className={trackClass}>
                 { this.renderIcon() }
                 <button
                     className={playButtonClass}
@@ -76,4 +97,7 @@ class Track extends Component {
 
 const mapStateToProps = state => ({ player: state.player });
 
-export default connect(mapStateToProps, { changeTrack })(Track);
+export default _.flow(
+    DragSource(ItemTypes.TRACK, trackSource, collect),
+    connect(mapStateToProps, { changeTrack })
+)(Track);

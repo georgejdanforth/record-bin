@@ -2,10 +2,18 @@ div.track {
     padding: 0.25rem;
 }
 
+div.track.dragging {
+    opacity: 0.4;
+}
+
 div.track:hover {
     -webkit-box-shadow: -2px 4px 4px -4px lightgray;
     -moz-box-shadow: -2px 4px 4px -4px lightgray;
     box-shadow: -2px 4px 4px -4px lightgray;
+}
+
+span.drag-handle {
+    cursor: grab;
 }
 
 a.track-title {
