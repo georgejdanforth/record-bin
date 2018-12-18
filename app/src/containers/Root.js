@@ -7,7 +7,7 @@ import { scrape } from '../utils';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
-import Folder from '../components/Folder';
+import FolderContainer from '../components/Folder';
 import LoadingOverlay from '../components/LoadingOverlay';
 import Track from './Track';
 
@@ -35,6 +35,8 @@ class Root extends Component {
     cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
     insertAddTrack = () => this.setState({ addingFolder: false, addingTrack: true });
     cancelAddTrack = () => this.setState({addingFolder: false, addingTrack: false });
+
+    getPath = path => path;
 
     addFolder = (folderName, path=[]) => this.setState(
         { addingFolder: false },
@@ -64,7 +66,8 @@ class Root extends Component {
             return 0;
         }).map(folder => (
             <li key={folder.id}>
-                <Folder
+                <FolderContainer
+                    getPath={this.getPath}
                     addFolder={this.addFolder}
                     deleteFolder={this.deleteFolder}
                     addTrack={this.addTrack}

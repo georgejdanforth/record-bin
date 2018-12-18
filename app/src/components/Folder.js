@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, cloneElement } from 'react';
 import { DropTarget } from 'react-dnd';
 import _ from 'lodash';
 
@@ -29,12 +29,18 @@ class Folder extends Component {
         expanded: false
     };
 
+    componentDidMount() {
+        console.log(this.getPath([]));
+    }
+
     toggleExpanded = () => this.setState({ expanded: !this.state.expanded });
 
     insertAddFolder = () => this.setState({ addingFolder: true, addingTrack: false });
     cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
     insertAddTrack = () => this.setState({ addingFolder: false, addingTrack: true });
     cancelAddTrack = () => this.setState({ addingFolder: false, addingTrack: false });
+
+    getPath = path => this.props.getPath(_.concat([this.props.id], path));
 
     addFolder = (folderName, path=[]) => this.setState(
         { addingFolder: false },
@@ -51,6 +57,17 @@ class Folder extends Component {
     deleteTrack = (trackId, path=[]) =>
         this.props.deleteTrack(trackId, _.concat([this.props.id], path));
 
+    renderHeader = () => this.props.connectDropTarget(
+        <span
+            className={'folder-title' + (this.props.isOver ? ' is-over' : '')}
+            onClick={this.toggleExpanded}
+        >
+            <FolderIcon/>
+            { this.props.name }
+            <ChevronIcon expanded={this.state.expanded}/>
+        </span>
+    );
+
     renderFolders = () => this.props.folders
         .sort((a, b) => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
@@ -58,7 +75,8 @@ class Folder extends Component {
             return 0;
         }).map(folder => (
             <li key={folder.id}>
-                <Folder
+                <FolderContainer
+                    getPath={this.getPath}
                     addFolder={this.addFolder}
                     deleteFolder={this.deleteFolder}
                     addTrack={this.addTrack}
@@ -83,16 +101,9 @@ class Folder extends Component {
         ));
 
     render() {
-
-        const folderClass = this.props.isOver ? 'is-over' : '';
-
-        return this.props.connectDropTarget(
-            <div className={folderClass}>
-                <span className="folder-title" onClick={this.toggleExpanded}>
-                    <FolderIcon/>
-                    { this.props.name }
-                    <ChevronIcon expanded={this.state.expanded}/>
-                </span>
+        return (
+            <div>
+                { this.renderHeader() }
                 { this.state.expanded &&
                     <div>
                         <ButtonGroup
@@ -129,4 +140,5 @@ class Folder extends Component {
     }
 }
 
-export default DropTarget(ItemTypes.TRACK, folderTarget, collect)(Folder);
+const FolderContainer = DropTarget(ItemTypes.TRACK, folderTarget, collect)(Folder);
+export default FolderContainer;
