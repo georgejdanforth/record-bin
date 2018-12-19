@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DropTarget } from 'react-dnd';
+import { DragSource, DropTarget } from 'react-dnd';
 import _ from 'lodash';
 
 import './Folder.css';
@@ -9,6 +9,21 @@ import ButtonGroup from './ButtonGroup';
 import Track from '../containers/Track';
 import { FolderIcon, ChevronIcon } from './icons';
 import { ItemTypes } from '../dnd/itemTypes';
+import { store } from '../store/store';
+
+const folderSource = {
+    beginDrag(props) {
+        return { folderId: props.id };
+    },
+
+    endDrag(props, monitor) {
+        const dropResult = monitor.getDropResult();
+        if (dropResult) {
+            console.log(dropResult.path);
+            console.log(props.getPath([props.id]));
+        }
+    }
+};
 
 const folderTarget = {
     drop(props) {
@@ -18,7 +33,13 @@ const folderTarget = {
     }
 };
 
-const collect = (connect, monitor) => ({
+const collectDragSource = (connect, monitor) => ({
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
+    isDragging: monitor.isDragging(),
+});
+
+const collectDropTarget = (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
 });
@@ -60,7 +81,7 @@ class Folder extends Component {
             className={'folder-title' + (this.props.isOver ? ' is-over' : '')}
             onClick={this.toggleExpanded}
         >
-            <FolderIcon/>
+            { this.props.connectDragSource(<span><FolderIcon/></span>) }
             { this.props.name }
             <ChevronIcon expanded={this.state.expanded}/>
         </span>
@@ -100,7 +121,7 @@ class Folder extends Component {
         ));
 
     render() {
-        return (
+        return this.props.connectDragPreview(
             <div>
                 { this.renderHeader() }
                 { this.state.expanded &&
@@ -139,5 +160,8 @@ class Folder extends Component {
     }
 }
 
-const FolderContainer = DropTarget(ItemTypes.TRACK, folderTarget, collect)(Folder);
+const FolderContainer = _.flow(
+    DragSource(ItemTypes.FOLDER, folderSource, collectDragSource),
+    DropTarget([ItemTypes.FOLDER, ItemTypes.TRACK], folderTarget, collectDropTarget),
+)(Folder);
 export default FolderContainer;
