@@ -1,4 +1,4 @@
-import React, { Component, cloneElement } from 'react';
+import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import _ from 'lodash';
 
@@ -30,10 +30,6 @@ class Folder extends Component {
         addingTrack: false,
         expanded: false
     };
-
-    componentDidMount() {
-        console.log(this.getPath([]));
-    }
 
     toggleExpanded = () => this.setState({ expanded: !this.state.expanded });
 
