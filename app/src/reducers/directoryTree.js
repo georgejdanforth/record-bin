@@ -67,9 +67,20 @@ const deleteTrack = (state, action) => {
     return tree;
 };
 
-const getTrack = (state, action) => state;
+const getTrack = (root, path, trackId) => _.find(
+    getNode(root, path).tracks,
+    track => track.id === trackId
+);
 
-const moveTrack = (state, action) => state;
+const moveTrack = (state, action) => {
+    let tree = deepCopy(state);
+
+    const track = getTrack(tree, action.trackPath, action.trackId);
+    tree = deleteTrack(tree, { path: action.trackPath, trackId: action.trackId});
+    tree = addTrack(tree, { path: action.folderPath, track });
+
+    return tree;
+};
 
 const directoryTree = (state={
     id: 'root',

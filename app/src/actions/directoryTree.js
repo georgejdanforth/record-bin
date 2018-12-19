@@ -27,8 +27,9 @@ export const deleteTrack = (path, trackId) => ({
     trackId
 });
 
-export const moveTrack = (trackPath, folderPath) => ({
+export const moveTrack = (trackId, trackPath, folderPath) => ({
     type: MOVE_TRACK,
+    trackId,
     trackPath,
     folderPath
 });

@@ -26,8 +26,11 @@ const trackSource = {
     endDrag(props, monitor) {
         const dropResult = monitor.getDropResult();
         if (dropResult) {
-            console.log(dropResult.path);
-            console.log(props.getPath([props.id]));
+            store.dispatch(moveTrack(
+                props.id,
+                props.getPath([]),
+                dropResult.path
+            ));
         }
     }
 };
