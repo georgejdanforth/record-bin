@@ -40,24 +40,17 @@ class Root extends Component {
 
     addFolder = (folderName, path=[]) => this.setState(
         { addingFolder: false },
-        () => this.props.addFolder(this.props.directoryTree, path, folderName)
+        () => this.props.addFolder(path, folderName)
     );
 
-    deleteFolder = path => this.props.deleteFolder(
-        this.props.directoryTree,
-        path
-    );
+    deleteFolder = path => this.props.deleteFolder(path);
 
     addTrack = (track, path=[]) => this.setState(
         { addingTrack: false },
-        () => this.props.addTrack(this.props.directoryTree, path, track)
+        () => this.props.addTrack(path, track)
     );
 
-    deleteTrack = (trackId, path=[]) => this.props.deleteTrack(
-        this.props.directoryTree,
-        path,
-        trackId
-    );
+    deleteTrack = (trackId, path=[]) => this.props.deleteTrack(path, trackId);
 
     renderFolders = () => this.props.directoryTree.folders
         .sort((a, b) => {
@@ -85,6 +78,7 @@ class Root extends Component {
         }).map(track => (
             <li key={track.id}>
                 <Track
+                    getPath={this.getPath}
                     deleteTrack={() => this.deleteTrack(track.id)}
                     {...track}
                 />

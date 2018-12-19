@@ -12,7 +12,9 @@ import { ItemTypes } from '../dnd/itemTypes';
 
 const folderTarget = {
     drop(props) {
-        console.log(props);
+        return {
+            path: props.getPath([props.id])
+        };
     }
 };
 
@@ -94,6 +96,7 @@ class Folder extends Component {
         }).map(track => (
             <li key={track.id}>
                 <Track
+                    getPath={this.getPath}
                     deleteTrack={() => this.deleteTrack(track.id)}
                     {...track}
                 />

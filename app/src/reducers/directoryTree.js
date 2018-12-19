@@ -6,6 +6,7 @@ import {
     ADD_TRACK,
     DELETE_FOLDER,
     DELETE_TRACK,
+    MOVE_TRACK,
 } from '../actions/directoryTree';
 
 const getNode = (root, path, depth=0) => depth >= path.length
@@ -27,8 +28,8 @@ const getParentNode = (root, path, depth=0) => depth >= path.length - 1
 
 const deepCopy = object => JSON.parse(JSON.stringify(object));
 
-const addFolder = action => {
-    const tree = deepCopy(action.directoryTree);
+const addFolder = (state, action) => {
+    const tree = deepCopy(state);
     const folder = getNode(tree, action.path);
     folder.folders.push({
         id: `folder-${uuidv4()}`,
@@ -40,8 +41,8 @@ const addFolder = action => {
     return tree;
 };
 
-const deleteFolder = action => {
-    const tree = deepCopy(action.directoryTree);
+const deleteFolder = (state, action) => {
+    const tree = deepCopy(state);
     const parent = getParentNode(tree, action.path);
     parent.folders = parent.folders.filter(
         folder => folder.id !== action.path[action.path.length - 1]
@@ -50,21 +51,25 @@ const deleteFolder = action => {
     return tree;
 };
 
-const addTrack = action => {
-    const tree = deepCopy(action.directoryTree);
+const addTrack = (state, action) => {
+    const tree = deepCopy(state);
     const folder = getNode(tree, action.path);
     folder.tracks.push(action.track);
 
     return tree;
 };
 
-const deleteTrack = action => {
-    const tree = deepCopy(action.directoryTree);
+const deleteTrack = (state, action) => {
+    const tree = deepCopy(state);
     const folder = getNode(tree, action.path);
     folder.tracks = folder.tracks.filter(track => track.id !== action.trackId);
 
     return tree;
 };
+
+const getTrack = (state, action) => state;
+
+const moveTrack = (state, action) => state;
 
 const directoryTree = (state={
     id: 'root',
@@ -74,13 +79,15 @@ const directoryTree = (state={
 }, action) => {
     switch (action.type) {
         case ADD_FOLDER:
-            return addFolder(action);
+            return addFolder(state, action);
         case DELETE_FOLDER:
-            return deleteFolder(action);
+            return deleteFolder(state, action);
         case ADD_TRACK:
-            return addTrack(action);
+            return addTrack(state, action);
         case DELETE_TRACK:
-            return deleteTrack(action);
+            return deleteTrack(state, action);
+        case MOVE_TRACK:
+            return moveTrack(state, action);
         default:
             return state;
     }

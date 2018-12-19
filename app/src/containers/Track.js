@@ -14,11 +14,21 @@ import {
     YoutubeIcon
 } from '../components/icons';
 import { ItemTypes } from '../dnd/itemTypes';
+import { store } from '../store/store';
+import { moveTrack } from '../actions/directoryTree';
 import { changeTrack } from '../actions/player';
 
 const trackSource = {
     beginDrag(props) {
         return { trackId: props.id };
+    },
+
+    endDrag(props, monitor) {
+        const dropResult = monitor.getDropResult();
+        if (dropResult) {
+            console.log(dropResult.path);
+            console.log(props.getPath([props.id]));
+        }
     }
 };
 
@@ -29,6 +39,15 @@ const collect = (connect, monitor) => ({
 });
 
 class Track extends Component {
+
+    getPath = path => this.props.getPath(_.concat([this.props.id], path));
+
+    changeTrack = () => this.props.changeTrack({
+        id: this.props.id,
+        embedUrl: this.props.embedUrl,
+        mediaType: this.props.mediaType,
+        url: this.props.url,
+    });
 
     getMediaTypeIcon = () => {
         switch (this.props.mediaType) {
@@ -48,13 +67,6 @@ class Track extends Component {
     renderIcon = () => this.props.connectDragSource(
         <span className="drag-handle">{ this.getMediaTypeIcon() }</span>
     );
-
-    changeTrack = () => this.props.changeTrack({
-        id: this.props.id,
-        embedUrl: this.props.embedUrl,
-        mediaType: this.props.mediaType,
-        url: this.props.url,
-    });
 
     render () {
         const playButtonClass = 'play-button' + (

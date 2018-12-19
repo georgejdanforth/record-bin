@@ -7,10 +7,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import './index.css';
 import App from './App';
-import configureStore from './store/configureStore';
-
-
-const { store, persistor } = configureStore();
+import { store, persistor } from './store/store';
 
 ReactDOM.render(
     <Provider store={store}>

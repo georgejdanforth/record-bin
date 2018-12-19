@@ -2,30 +2,33 @@ export const ADD_FOLDER = 'ADD_FOLDER';
 export const DELETE_FOLDER = 'DELETE_FOLDER';
 export const ADD_TRACK = 'ADD_TRACK';
 export const DELETE_TRACK = 'DELETE_TRACK';
+export const MOVE_TRACK = 'MOVE_TRACK';
 
-export const addFolder = (directoryTree, path, folderName) => ({
+export const addFolder = (path, folderName) => ({
     type: ADD_FOLDER,
-    directoryTree,
     path,
     folderName
 });
 
-export const deleteFolder = (directoryTree, path) => ({
+export const deleteFolder = path => ({
     type: DELETE_FOLDER,
-    directoryTree,
     path,
 });
 
-export const addTrack = (directoryTree, path, track) => ({
+export const addTrack = (path, track) => ({
     type: ADD_TRACK,
-    directoryTree,
     path,
     track
 });
 
-export const deleteTrack = (directoryTree, path, trackId) => ({
+export const deleteTrack = (path, trackId) => ({
     type: DELETE_TRACK,
-    directoryTree,
     path,
     trackId
+});
+
+export const moveTrack = (trackPath, folderPath) => ({
+    type: MOVE_TRACK,
+    trackPath,
+    folderPath
 });
