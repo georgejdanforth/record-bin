@@ -102,14 +102,16 @@ class Folder extends Component {
                 { this.renderHeader() }
                 { this.state.expanded &&
                     <div>
-                        <ButtonGroup
-                            addFolderDisabled={this.state.addingFolder}
-                            insertAddFolder={this.insertAddFolder}
-                            addTrackDisabled={this.state.addingTrack}
-                            insertAddTrack={this.insertAddTrack}
-                            deleteFolder={() => this.deleteFolder([])}
-                        />
                         <ul>
+                            <li>
+                                <ButtonGroup
+                                    addFolderDisabled={this.state.addingFolder}
+                                    insertAddFolder={this.insertAddFolder}
+                                    addTrackDisabled={this.state.addingTrack}
+                                    insertAddTrack={this.insertAddTrack}
+                                    deleteFolder={() => this.deleteFolder([])}
+                                />
+                            </li>
                             { this.state.addingFolder &&
                                 <li>
                                     <AddFolder
