@@ -10,57 +10,12 @@ import ButtonGroup from './ButtonGroup';
 import Track from '../containers/Track';
 import { FolderIcon, ChevronIcon } from './icons';
 import { ItemTypes } from '../dnd/itemTypes';
-import { store } from '../store/store';
-import { moveFolder } from '../actions/directoryTree';
-
-const folderSource = {
-    beginDrag(props) {
-        return {
-            id: props.id,
-            itemType: ItemTypes.FOLDER,
-        };
-    },
-
-    endDrag(props, monitor) {
-        const dropResult = monitor.getDropResult();
-        if (dropResult) {
-            store.dispatch(moveFolder(
-                props.getPath([props.id]),
-                dropResult.path
-            ));
-        }
-    }
-};
-
-const folderTarget = {
-
-    canDrop(props, monitor) {
-        const { id, itemType } = monitor.getItem();
-        if (itemType === ItemTypes.TRACK) {
-            return true;
-        } else {
-            return !props.getPath([props.id]).includes(id);
-        }
-    },
-
-    drop(props) {
-        return {
-            path: props.getPath([props.id])
-        };
-    }
-};
-
-const collectDragSource = (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    connectDragPreview: connect.dragPreview(),
-    isDragging: monitor.isDragging(),
-});
-
-const collectDropTarget = (connect, monitor) => ({
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop(),
-});
+import {
+    folderSource,
+    folderTarget,
+    collectDragSource,
+    collectDropTarget
+} from '../dnd/folder';
 
 class Folder extends Component {
 

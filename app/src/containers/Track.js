@@ -14,35 +14,8 @@ import {
     YoutubeIcon
 } from '../components/icons';
 import { ItemTypes } from '../dnd/itemTypes';
-import { store } from '../store/store';
-import { moveTrack } from '../actions/directoryTree';
+import { trackSource, collectDragSource } from '../dnd/track';
 import { changeTrack } from '../actions/player';
-
-const trackSource = {
-    beginDrag(props) {
-        return {
-            id: props.id,
-            itemType: ItemTypes.TRACK,
-        };
-    },
-
-    endDrag(props, monitor) {
-        const dropResult = monitor.getDropResult();
-        if (dropResult) {
-            store.dispatch(moveTrack(
-                props.id,
-                props.getPath([]),
-                dropResult.path
-            ));
-        }
-    }
-};
-
-const collect = (connect, monitor) => ({
-    connectDragSource: connect.dragSource(),
-    connectDragPreview: connect.dragPreview(),
-    isDragging: monitor.isDragging()
-});
 
 class Track extends Component {
 
@@ -116,6 +89,6 @@ class Track extends Component {
 const mapStateToProps = state => ({ player: state.player });
 
 export default _.flow(
-    DragSource(ItemTypes.TRACK, trackSource, collect),
+    DragSource(ItemTypes.TRACK, trackSource, collectDragSource),
     connect(mapStateToProps, { changeTrack })
 )(Track);
