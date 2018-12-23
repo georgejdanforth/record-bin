@@ -22,7 +22,6 @@ export const folderSource = {
 };
 
 export const folderTarget = {
-
     canDrop(props, monitor) {
         const { id, itemType } = monitor.getItem();
         if (itemType === ItemTypes.TRACK) {

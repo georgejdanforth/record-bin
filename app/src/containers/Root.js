@@ -1,7 +1,11 @@
 /* global chrome */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { DropTarget } from 'react-dnd';
+import classNames from 'classnames';
+import _ from 'lodash';
 
+import './Root.css';
 import { addFolder, deleteFolder, addTrack, deleteTrack } from '../actions/directoryTree';
 import { scrape } from '../utils';
 import AddFolder from '../components/AddFolder';
@@ -10,6 +14,8 @@ import ButtonGroup from '../components/ButtonGroup';
 import FolderContainer from '../components/Folder';
 import LoadingOverlay from '../components/LoadingOverlay';
 import Track from './Track';
+import { ItemTypes } from '../dnd/itemTypes';
+import { rootTarget, collectDropTarget } from '../dnd/root';
 
 class Root extends Component {
 
@@ -50,6 +56,22 @@ class Root extends Component {
 
     deleteTrack = (trackId, path=[]) => this.props.deleteTrack(path, trackId);
 
+    getButtonGroupClasses = ()  => classNames('root-button-group', {
+        'is-over': this.props.isOver
+    });
+
+    renderButtonGroup = () => this.props.connectDropTarget(
+        <span className={this.getButtonGroupClasses()}>
+            <ButtonGroup
+                addFolderDisabled={this.state.addingFolder}
+                insertAddFolder={this.insertAddFolder}
+                addTrackDisabled={this.state.addingTrack}
+                insertAddTrack={this.insertAddTrack}
+                showDelete={false}
+            />
+        </span>
+    );
+
     renderFolders = () => this.props.directoryTree.folders
         .sort((a, b) => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
@@ -84,15 +106,10 @@ class Root extends Component {
         ));
 
     render() {
+        if (this.props.isOver) console.log('its ova!!!!!!');
         return (
             <div>
-                <ButtonGroup
-                    addFolderDisabled={this.state.addingFolder}
-                    insertAddFolder={this.insertAddFolder}
-                    addTrackDisabled={this.state.addingTrack}
-                    insertAddTrack={this.insertAddTrack}
-                    showDelete={false}
-                />
+                { this.renderButtonGroup() }
                 <ul>
                     { this.state.addingFolder &&
                         <li>
@@ -122,12 +139,7 @@ class Root extends Component {
 
 const mapStateToProps = state => ({ directoryTree: state.directoryTree });
 
-export default connect(
-    mapStateToProps,
-    {
-        addFolder,
-        deleteFolder,
-        addTrack,
-        deleteTrack,
-    }
+export default _.flow(
+    DropTarget([ItemTypes.TRACK, ItemTypes.FOLDER], rootTarget, collectDropTarget),
+    connect(mapStateToProps, { addFolder, deleteFolder, addTrack, deleteTrack })
 )(Root);

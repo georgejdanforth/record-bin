@@ -1,0 +1,9 @@
+span.root-button-group {
+    display: block;
+    width: 100%;
+    padding: 0.25rem;
+}
+
+span.is-over {
+    background: lightblue;
+}
