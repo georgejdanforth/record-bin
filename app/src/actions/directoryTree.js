@@ -1,5 +1,6 @@
 export const ADD_FOLDER = 'ADD_FOLDER';
 export const DELETE_FOLDER = 'DELETE_FOLDER';
+export const MOVE_FOLDER = 'MOVE_FOLDER';
 export const ADD_TRACK = 'ADD_TRACK';
 export const DELETE_TRACK = 'DELETE_TRACK';
 export const MOVE_TRACK = 'MOVE_TRACK';
@@ -13,6 +14,12 @@ export const addFolder = (path, folderName) => ({
 export const deleteFolder = path => ({
     type: DELETE_FOLDER,
     path,
+});
+
+export const moveFolder = (fromPath, toPath) => ({
+    type: MOVE_FOLDER,
+    fromPath,
+    toPath
 });
 
 export const addTrack = (path, track) => ({

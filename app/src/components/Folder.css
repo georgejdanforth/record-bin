@@ -1,15 +1,23 @@
-span.is-over {
-    background: lightblue;
-}
-
-li {
-    margin-left: 1.5rem;
-}
-
 span.folder-title {
     display: block;
     width: 100%;
     padding: 0.25rem;
+}
+
+span.is-over {
+    background: lightblue;
+}
+
+span.cannot-drop {
+    background: indianred;
+}
+
+span.dragging {
+    opacity: 0.4;
+}
+
+li {
+    margin-left: 1.5rem;
 }
 
 span.folder-title:hover {

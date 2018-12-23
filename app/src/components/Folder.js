@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
+import classNames from 'classnames';
 import _ from 'lodash';
 
 import './Folder.css';
@@ -10,22 +11,38 @@ import Track from '../containers/Track';
 import { FolderIcon, ChevronIcon } from './icons';
 import { ItemTypes } from '../dnd/itemTypes';
 import { store } from '../store/store';
+import { moveFolder } from '../actions/directoryTree';
 
 const folderSource = {
     beginDrag(props) {
-        return { folderId: props.id };
+        return {
+            id: props.id,
+            itemType: ItemTypes.FOLDER,
+        };
     },
 
     endDrag(props, monitor) {
         const dropResult = monitor.getDropResult();
         if (dropResult) {
-            console.log(dropResult.path);
-            console.log(props.getPath([props.id]));
+            store.dispatch(moveFolder(
+                props.getPath([props.id]),
+                dropResult.path
+            ));
         }
     }
 };
 
 const folderTarget = {
+
+    canDrop(props, monitor) {
+        const { id, itemType } = monitor.getItem();
+        if (itemType === ItemTypes.TRACK) {
+            return true;
+        } else {
+            return !props.getPath([props.id]).includes(id);
+        }
+    },
+
     drop(props) {
         return {
             path: props.getPath([props.id])
@@ -42,6 +59,7 @@ const collectDragSource = (connect, monitor) => ({
 const collectDropTarget = (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver(),
+    canDrop: monitor.canDrop(),
 });
 
 class Folder extends Component {
@@ -61,31 +79,34 @@ class Folder extends Component {
 
     getPath = path => this.props.getPath(_.concat([this.props.id], path));
 
-    addFolder = (folderName, path=[]) => this.setState(
-        { addingFolder: false },
-        () => this.props.addFolder(folderName, _.concat([this.props.id], path))
+    addFolder = (folderName, path=[]) => this.setState({ addingFolder: false }, () =>
+        this.props.addFolder(folderName, _.concat([this.props.id], path))
     );
 
     deleteFolder = path => this.props.deleteFolder(_.concat([this.props.id], path));
 
-    addTrack = (track, path=[]) => this.setState(
-        { addingTrack: false },
-        () => this.props.addTrack(track, _.concat([this.props.id], path))
+    addTrack = (track, path=[]) => this.setState({ addingTrack: false }, () =>
+        this.props.addTrack(track, _.concat([this.props.id], path))
     );
 
     deleteTrack = (trackId, path=[]) =>
         this.props.deleteTrack(trackId, _.concat([this.props.id], path));
 
-    renderHeader = () => this.props.connectDropTarget(
-        <span
-            className={'folder-title' + (this.props.isOver ? ' is-over' : '')}
-            onClick={this.toggleExpanded}
-        >
-            { this.props.connectDragSource(<span><FolderIcon/></span>) }
+    getHeaderClasses = () => classNames('folder-title', {
+        'is-over': this.props.isOver && this.props.canDrop,
+        'dragging': this.props.isDragging,
+        'cannot-drop': this.props.isOver && !this.props.canDrop,
+    });
+
+    renderHeader = () => this.props.connectDragPreview(this.props.connectDropTarget(
+        <span className={this.getHeaderClasses()} onClick={this.toggleExpanded}>
+            { this.props.connectDragSource(
+                <span className="drag-handle"><FolderIcon/></span>
+            ) }
             { this.props.name }
             <ChevronIcon expanded={this.state.expanded}/>
         </span>
-    );
+    ));
 
     renderFolders = () => this.props.folders
         .sort((a, b) => {
@@ -121,7 +142,7 @@ class Folder extends Component {
         ));
 
     render() {
-        return this.props.connectDragPreview(
+        return (
             <div>
                 { this.renderHeader() }
                 { this.state.expanded &&

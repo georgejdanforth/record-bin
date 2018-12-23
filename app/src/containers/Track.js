@@ -20,7 +20,10 @@ import { changeTrack } from '../actions/player';
 
 const trackSource = {
     beginDrag(props) {
-        return { trackId: props.id };
+        return {
+            id: props.id,
+            itemType: ItemTypes.TRACK,
+        };
     },
 
     endDrag(props, monitor) {

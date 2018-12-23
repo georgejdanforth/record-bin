@@ -38,16 +38,14 @@ class Root extends Component {
 
     getPath = path => path;
 
-    addFolder = (folderName, path=[]) => this.setState(
-        { addingFolder: false },
-        () => this.props.addFolder(path, folderName)
+    addFolder = (folderName, path=[]) => this.setState({ addingFolder: false }, () =>
+        this.props.addFolder(path, folderName)
     );
 
     deleteFolder = path => this.props.deleteFolder(path);
 
-    addTrack = (track, path=[]) => this.setState(
-        { addingTrack: false },
-        () => this.props.addTrack(path, track)
+    addTrack = (track, path=[]) => this.setState({ addingTrack: false }, () =>
+        this.props.addTrack(path, track)
     );
 
     deleteTrack = (trackId, path=[]) => this.props.deleteTrack(path, trackId);
