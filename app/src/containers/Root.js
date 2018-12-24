@@ -11,7 +11,7 @@ import { scrape } from '../utils';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
-import FolderContainer from '../components/Folder';
+import FolderContainer from './Folder';
 import LoadingOverlay from '../components/LoadingOverlay';
 import Track from './Track';
 import { ItemTypes } from '../dnd/itemTypes';

@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
 import _ from 'lodash';
 
 import './Folder.css';
-import AddFolder from './AddFolder';
-import AddTrack from './AddTrack';
-import ButtonGroup from './ButtonGroup';
+import AddFolder from '../components/AddFolder';
+import AddTrack from '../components/AddTrack';
+import ButtonGroup from '../components/ButtonGroup';
 import Track from '../containers/Track';
-import { FolderIcon, ChevronIcon } from './icons';
+import { FolderIcon, ChevronIcon } from '../components/icons';
+import { expandFolder, collapseFolder } from '../actions/expandedFolders';
 import { ItemTypes } from '../dnd/itemTypes';
 import {
     folderSource,
@@ -22,10 +24,12 @@ class Folder extends Component {
     state = {
         addingFolder: false,
         addingTrack: false,
-        expanded: false
     };
 
-    toggleExpanded = () => this.setState({ expanded: !this.state.expanded });
+    expanded = () => _.includes(this.props.expandedFolders, this.props.id);
+    toggleExpanded = () => this.expanded()
+        ? this.props.collapseFolder(this.props.id)
+        : this.props.expandFolder(this.props.id);
 
     insertAddFolder = () => this.setState({ addingFolder: true, addingTrack: false });
     cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
@@ -59,7 +63,7 @@ class Folder extends Component {
                 <span className="drag-handle"><FolderIcon/></span>
             ) }
             { this.props.name }
-            <ChevronIcon expanded={this.state.expanded}/>
+            <ChevronIcon expanded={this.expanded()}/>
         </span>
     ));
 
@@ -100,7 +104,7 @@ class Folder extends Component {
         return (
             <div>
                 { this.renderHeader() }
-                { this.state.expanded &&
+                { this.expanded() &&
                     <div>
                         <ul>
                             <li>
@@ -138,8 +142,11 @@ class Folder extends Component {
     }
 }
 
+const mapStateToProps = state => ({ expandedFolders: state.expandedFolders });
+
 const FolderContainer = _.flow(
     DragSource(ItemTypes.FOLDER, folderSource, collectDragSource),
     DropTarget([ItemTypes.FOLDER, ItemTypes.TRACK], folderTarget, collectDropTarget),
+    connect(mapStateToProps, { expandFolder, collapseFolder }),
 )(Folder);
 export default FolderContainer;
