@@ -8,3 +8,10 @@ div.loading-overlay {
     left: 0;
     background-color: rgba(0,0,0,.5);
 }
+
+div.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
