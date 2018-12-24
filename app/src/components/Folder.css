@@ -2,6 +2,8 @@ span.folder-title {
     display: block;
     width: 100%;
     padding: 0.25rem;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 span.is-over {
