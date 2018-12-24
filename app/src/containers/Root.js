@@ -25,17 +25,17 @@ class Root extends Component {
         loading: false,
     };
 
-    // componentDidMount() {
-    //     chrome.runtime.onMessage.addListener(
-    //         (request, sender, sendResponse) =>
-    //             this.setState({ loading: true }, () =>
-    //                 scrape(request.url)
-    //                     .then(track =>
-    //                         this.setState({ loading: false }, () =>
-    //                             this.addTrack(track)))
-    //                     .catch(error => console.log(error)))
-    //     );
-    // }
+    componentDidMount() {
+        chrome.runtime.onMessage.addListener(
+            (request, sender, sendResponse) =>
+                this.setState({ loading: true }, () =>
+                    scrape(request.url)
+                        .then(track =>
+                            this.setState({ loading: false }, () =>
+                                this.addTrack(track)))
+                        .catch(error => console.log(error)))
+        );
+    }
 
     insertAddFolder = () => this.setState({ addingFolder: true, addingTrack: false });
     cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
