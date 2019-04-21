@@ -9,7 +9,7 @@ import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
 import Track from '../containers/Track';
-import { FolderIcon, ChevronIcon } from '../components/icons';
+import { DragIcon, FolderIcon, ChevronIcon } from '../components/icons';
 import { expandFolder, collapseFolder } from '../actions/expandedFolders';
 import { ItemTypes } from '../dnd/itemTypes';
 import {
@@ -59,9 +59,8 @@ class Folder extends Component {
 
     renderHeader = () => this.props.connectDragPreview(this.props.connectDropTarget(
         <span className={this.getHeaderClasses()} onClick={this.toggleExpanded}>
-            { this.props.connectDragSource(
-                <span className="drag-handle"><FolderIcon/></span>
-            ) }
+            <span className="folder-icon"><FolderIcon/></span>
+            { this.props.connectDragSource(<span className="drag-handle"><DragIcon/></span>) }
             { this.props.name }
             <ChevronIcon expanded={this.expanded()}/>
         </span>

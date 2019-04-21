@@ -28,3 +28,11 @@ span.folder-title:hover {
     -moz-box-shadow: -2px 4px 4px -4px lightgray;
     box-shadow: -2px 4px 4px -4px lightgray;
 }
+
+span.folder-title:hover > span.drag-handle {
+    display: inline;
+}
+
+span.folder-title:hover > span.folder-icon {
+    display: none;
+}
