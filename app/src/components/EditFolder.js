@@ -16,10 +16,18 @@ class EditFolder extends Component {
 
     updateFolderName = ({ target }) => this.setState({ folderName: target.value });
 
+    editFolder = () => {
+        if (this.state.folderName && this.state.folderName.trim()) {
+            this.props.editFolder(this.state.folderName);
+        } else {
+            this.props.cancelEditFolder();
+        }
+    };
+
     handleKeyUp = ({ key }) => {
         switch (key) {
             case 'Enter':
-                this.props.editFolder(this.state.folderName);
+                this.editFolder();
                 break;
             case 'Escape':
                 this.props.cancelEditFolder();

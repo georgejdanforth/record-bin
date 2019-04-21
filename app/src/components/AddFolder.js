@@ -15,10 +15,18 @@ class AddFolder extends Component {
         folderName: target.value
     });
 
+    addFolder = () => {
+        if (this.state.folderName && this.state.folderName.trim()) {
+            this.props.addFolder(this.state.folderName);
+        } else {
+            this.props.cancelAddFolder();
+        }
+    };
+
     handleKeyUp = ({ key }) => {
         switch (key) {
             case 'Enter':
-                this.props.addFolder(this.state.folderName);
+                this.addFolder();
                 break;
             case 'Escape':
                 this.props.cancelAddFolder();
