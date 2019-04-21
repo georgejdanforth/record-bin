@@ -1,4 +1,3 @@
-/* global chrome */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
@@ -7,12 +6,10 @@ import _ from 'lodash';
 
 import './Root.css';
 import { addFolder, deleteFolder, editFolder, addTrack, deleteTrack } from '../actions/directoryTree';
-import { scrape } from '../utils';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
 import FolderContainer from './Folder';
-import LoadingOverlay from '../components/LoadingOverlay';
 import Track from './Track';
 import { ItemTypes } from '../dnd/itemTypes';
 import { rootTarget, collectDropTarget } from '../dnd/root';
@@ -22,20 +19,7 @@ class Root extends Component {
     state = {
         addingFolder: false,
         addingTrack: false,
-        loading: false,
     };
-
-    componentDidMount() {
-        chrome.runtime.onMessage.addListener(
-            (request, sender, sendResponse) =>
-                this.setState({ loading: true }, () =>
-                    scrape(request.url)
-                        .then(track =>
-                            this.setState({ loading: false }, () =>
-                                this.addTrack(track)))
-                        .catch(error => console.log(error)))
-        );
-    }
 
     insertAddFolder = () => this.setState({ addingFolder: true, addingTrack: false });
     cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
@@ -133,7 +117,6 @@ class Root extends Component {
                     { this.renderFolders() }
                 </ul>
                 <ul>{ this.renderTracks() }</ul>
-                { this.state.loading && <LoadingOverlay/> }
             </div>
         );
     }
