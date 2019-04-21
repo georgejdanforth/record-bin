@@ -1,6 +1,6 @@
 {
   "name": "Record Bin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Keep track of your music across the web.",
   "manifest_version": 2,
   "permissions": [
