@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 const bandcampPlayer = (embedUrl) => (
     <iframe
+        allow="encrypted-media; autoplay"
         seamless
-        src={embedUrl}
+        src={`${embedUrl}autoplay=1`}
         style={{border: 0, width: '100%', height: '120px'}}
         title="bandcamp"
     />
@@ -12,10 +13,11 @@ const bandcampPlayer = (embedUrl) => (
 
 const soundcloudPlayer = (embedUrl) => (
     <iframe
+        allow="autoplay"
         frameborder="no"
         height="120"
         scrolling="no"
-        src={embedUrl}
+        src={`${embedUrl}&auto_play=true`}
         title="soundcloud"
         width="300"
     />
@@ -39,7 +41,7 @@ const youtubePlayer = (embedUrl) => (
         allowfullscreen
         frameborder="0"
         height="120"
-        src={embedUrl}
+        src={`${embedUrl}&autoplay=1`}
         title="youtube"
         width="300"
     />
