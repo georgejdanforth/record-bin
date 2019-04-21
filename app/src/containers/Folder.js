@@ -8,6 +8,7 @@ import './Folder.css';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
 import ButtonGroup from '../components/ButtonGroup';
+import EditFolder from "../components/EditFolder";
 import Track from '../containers/Track';
 import { DragIcon, FolderIcon, ChevronIcon } from '../components/icons';
 import { expandFolder, collapseFolder } from '../actions/expandedFolders';
@@ -65,7 +66,13 @@ class Folder extends Component {
         <span className={this.getHeaderClasses()} onClick={this.toggleExpanded}>
             <span className="folder-icon"><FolderIcon/></span>
             { this.props.connectDragSource(<span className="drag-handle"><DragIcon/></span>) }
-            { this.props.name }
+            { this.state.editingFolder
+                ? <EditFolder
+                    currentFolderName={this.props.name}
+                    cancelEditFolder={this.cancelEditFolder}
+                />
+                : this.props.name
+            }
             <ChevronIcon expanded={this.expanded()}/>
         </span>
     ));
