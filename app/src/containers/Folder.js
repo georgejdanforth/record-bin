@@ -24,6 +24,7 @@ class Folder extends Component {
     state = {
         addingFolder: false,
         addingTrack: false,
+        editingFolder: false,
     };
 
     expanded = () => _.includes(this.props.expandedFolders, this.props.id);
@@ -35,6 +36,9 @@ class Folder extends Component {
     cancelAddFolder = () => this.setState({ addingFolder: false, addingTrack: false });
     insertAddTrack = () => this.setState({ addingFolder: false, addingTrack: true });
     cancelAddTrack = () => this.setState({ addingFolder: false, addingTrack: false });
+
+    enterEditFolder = () => this.setState({ editingFolder: true });
+    cancelEditFolder = () => this.setState({ editingFolder: false });
 
     getPath = path => this.props.getPath(_.concat([this.props.id], path));
 
@@ -112,7 +116,10 @@ class Folder extends Component {
                                     insertAddFolder={this.insertAddFolder}
                                     addTrackDisabled={this.state.addingTrack}
                                     insertAddTrack={this.insertAddTrack}
+                                    editFolderDisabled={this.state.addingTrack || this.state.addingFolder}
+                                    enterEditFolder={this.enterEditFolder}
                                     deleteFolder={() => this.deleteFolder([])}
+                                    showExtra={true}
                                 />
                             </li>
                             { this.state.addingFolder &&

@@ -67,7 +67,7 @@ class Root extends Component {
                 insertAddFolder={this.insertAddFolder}
                 addTrackDisabled={this.state.addingTrack}
                 insertAddTrack={this.insertAddTrack}
-                showDelete={false}
+                showExtra={false}
             />
         </span>
     );

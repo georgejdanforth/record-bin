@@ -10,6 +10,7 @@ import {
     mdiFolder,
     mdiLoading,
     mdiMusic,
+    mdiPencil,
     mdiPlayCircleOutline,
     mdiSoundcloud,
     mdiSpotify,

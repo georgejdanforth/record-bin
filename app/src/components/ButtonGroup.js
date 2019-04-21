@@ -3,7 +3,8 @@ import { Icon } from '@mdi/react';
 import {
     mdiFolderPlus,
     mdiFolderRemove,
-    mdiPlaylistPlus
+    mdiPencil,
+    mdiPlaylistPlus,
 } from '@mdi/js';
 
 import './ButtonGroup.css';
@@ -25,7 +26,7 @@ class ButtonGroup extends Component {
 
     render() {
 
-        const showDelete = this.props.showDelete || this.props.showDelete === undefined;
+        const showExtra = this.props.showExtra || this.props.showExtra === undefined;
 
         return (
             <div className="button-group">
@@ -45,7 +46,17 @@ class ButtonGroup extends Component {
                 >
                     <ButtonIcon path={mdiPlaylistPlus}/>
                 </button>
-                { showDelete &&
+                {showExtra &&
+                    <button
+                        className="action-button tooltip"
+                        data-tooltip="Edit folder name"
+                        disabled={this.props.editFolderDisabled || false}
+                        onClick={this.props.enterEditFolder}
+                    >
+                        <ButtonIcon path={mdiPencil}/>
+                    </button>
+                }
+                {showExtra &&
                     <button
                         className="action-button danger tooltip"
                         data-tooltip="Delete folder"
@@ -54,7 +65,7 @@ class ButtonGroup extends Component {
                         <ButtonIcon path={mdiFolderRemove}/>
                     </button>
                 }
-                { (showDelete && this.state.deletingFolder) &&
+                { (showExtra && this.state.deletingFolder) &&
                     <span>
                         <small>
                             <i>Action is permanent! Are you sure you want to continue?</i>
