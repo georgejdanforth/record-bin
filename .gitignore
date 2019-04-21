@@ -67,6 +67,7 @@ typings/
 
 # misc
 .idea/
+*.zip
 _Store
 .env.local
 .env.development.local
