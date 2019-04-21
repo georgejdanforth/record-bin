@@ -5,8 +5,10 @@ import {
     ADD_FOLDER,
     ADD_TRACK,
     DELETE_FOLDER,
-    DELETE_TRACK, MOVE_FOLDER,
+    DELETE_TRACK,
+    EDIT_FOLDER,
     MOVE_TRACK,
+    MOVE_FOLDER,
 } from '../actions/directoryTree';
 
 const getNode = (root, path, depth=0) => depth >= path.length
@@ -47,6 +49,14 @@ const deleteFolder = (state, action) => {
     parent.folders = parent.folders.filter(
         folder => folder.id !== action.path[action.path.length - 1]
     );
+
+    return tree;
+};
+
+const editFolder = (state, action) => {
+    const tree = deepCopy(state);
+    const folder = getNode(tree, action.path);
+    folder.name = action.folderName;
 
     return tree;
 };
@@ -105,6 +115,8 @@ const directoryTree = (state={
             return addFolder(state, action);
         case DELETE_FOLDER:
             return deleteFolder(state, action);
+        case EDIT_FOLDER:
+            return editFolder(state, action);
         case ADD_TRACK:
             return addTrack(state, action);
         case DELETE_TRACK:

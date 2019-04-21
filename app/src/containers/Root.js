@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import _ from 'lodash';
 
 import './Root.css';
-import { addFolder, deleteFolder, addTrack, deleteTrack } from '../actions/directoryTree';
+import { addFolder, deleteFolder, editFolder, addTrack, deleteTrack } from '../actions/directoryTree';
 import { scrape } from '../utils';
 import AddFolder from '../components/AddFolder';
 import AddTrack from '../components/AddTrack';
@@ -50,6 +50,8 @@ class Root extends Component {
 
     deleteFolder = path => this.props.deleteFolder(path);
 
+    editFolder = (folderName, path=[]) => this.props.editFolder(path, folderName);
+
     addTrack = (track, path=[]) => this.setState({ addingTrack: false }, () =>
         this.props.addTrack(path, track)
     );
@@ -83,6 +85,7 @@ class Root extends Component {
                     getPath={this.getPath}
                     addFolder={this.addFolder}
                     deleteFolder={this.deleteFolder}
+                    editFolder={this.editFolder}
                     addTrack={this.addTrack}
                     deleteTrack={this.deleteTrack}
                     {...folder}
@@ -106,7 +109,6 @@ class Root extends Component {
         ));
 
     render() {
-        if (this.props.isOver) console.log('its ova!!!!!!');
         return (
             <div>
                 { this.renderButtonGroup() }
@@ -141,5 +143,5 @@ const mapStateToProps = state => ({ directoryTree: state.directoryTree });
 
 export default _.flow(
     DropTarget([ItemTypes.TRACK, ItemTypes.FOLDER], rootTarget, collectDropTarget),
-    connect(mapStateToProps, { addFolder, deleteFolder, addTrack, deleteTrack })
+    connect(mapStateToProps, { addFolder, deleteFolder, editFolder, addTrack, deleteTrack })
 )(Root);

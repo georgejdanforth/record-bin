@@ -49,6 +49,10 @@ class Folder extends Component {
 
     deleteFolder = path => this.props.deleteFolder(_.concat([this.props.id], path));
 
+    editFolder = (folderName, path=[]) => this.setState({ editingFolder: false }, () =>
+        this.props.editFolder(folderName, _.concat([this.props.id], path))
+    );
+
     addTrack = (track, path=[]) => this.setState({ addingTrack: false }, () =>
         this.props.addTrack(track, _.concat([this.props.id], path))
     );
@@ -69,6 +73,7 @@ class Folder extends Component {
             { this.state.editingFolder
                 ? <EditFolder
                     currentFolderName={this.props.name}
+                    editFolder={this.editFolder}
                     cancelEditFolder={this.cancelEditFolder}
                 />
                 : this.props.name
@@ -88,6 +93,7 @@ class Folder extends Component {
                     getPath={this.getPath}
                     addFolder={this.addFolder}
                     deleteFolder={this.deleteFolder}
+                    editFolder={this.editFolder}
                     addTrack={this.addTrack}
                     deleteTrack={this.deleteTrack}
                     {...folder}
