@@ -3,7 +3,7 @@ import { Container } from 'bloomer';
 import 'bulma/css/bulma.css';
 
 import './App.css';
-import Header from './containers/Header';
+import Header from './components/Header';
 import Player from './containers/Player';
 import Root from './containers/Root';
 
