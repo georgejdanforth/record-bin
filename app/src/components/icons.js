@@ -6,6 +6,7 @@ import {
     mdiChevronRight,
     mdiChevronDown,
     mdiDelete,
+    mdiDrag,
     mdiFolder,
     mdiLoading,
     mdiMusic,
@@ -39,6 +40,14 @@ export const DeleteIcon = () => (
     <Icon
         className="folder-icon"
         path={mdiDelete}
+        size={0.8}
+    />
+);
+
+export const DragIcon = () => (
+    <Icon
+        className="folder-icon"
+        path={mdiDrag}
         size={0.8}
     />
 );

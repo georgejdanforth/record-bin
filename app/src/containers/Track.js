@@ -7,6 +7,7 @@ import './Track.css';
 import {
     BandCampIcon,
     DeleteIcon,
+    DragIcon,
     MusicIcon,
     PlayIcon,
     SoundCloudIcon,
@@ -43,8 +44,8 @@ class Track extends Component {
         }
     };
 
-    renderIcon = () => this.props.connectDragSource(
-        <span className="drag-handle">{ this.getMediaTypeIcon() }</span>
+    renderDragHandle = () => this.props.connectDragSource(
+        <span className="drag-handle"><DragIcon/></span>
     );
 
     render () {
@@ -58,7 +59,8 @@ class Track extends Component {
 
         return this.props.connectDragPreview(
             <div className={trackClass}>
-                { this.renderIcon() }
+                { this.renderDragHandle() }
+                <span className="media-type">{ this.getMediaTypeIcon() }</span>
                 <button
                     className={playButtonClass}
                     onClick={this.changeTrack}

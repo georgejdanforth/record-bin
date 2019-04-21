@@ -12,8 +12,17 @@ div.track:hover {
     box-shadow: -2px 4px 4px -4px lightgray;
 }
 
+div.track:hover > span.drag-handle {
+    display: inline;
+}
+
+div.track:hover > span.media-type {
+    display: none;
+}
+
 span.drag-handle {
     cursor: grab;
+    display: none;
 }
 
 a.track-title {
