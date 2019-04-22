@@ -1,0 +1,15 @@
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin-left: 1rem;
+}
+
+div.folder-list {
+    max-width: 80%;
+    max-height: 12em;
+    overflow: scroll;
+    margin: auto;
+    border: 1px solid lightgray;
+}
