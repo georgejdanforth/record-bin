@@ -25,6 +25,7 @@ import {
     SpotifyIcon,
     YoutubeIcon
 } from '../components/icons';
+import { addTrack } from '../actions/directoryTree';
 
 class Folder extends Component {
 
@@ -78,6 +79,11 @@ class AddTrackModal extends Component {
     };
 
     selectFolder = (id, path) => this.setState({ path: path, selectedId: id });
+
+    addTrack = () => {
+        this.props.addTrack(this.state.path, this.props.track);
+        this.props.close();
+    };
 
     getMediaTypeIcon = () => {
         switch (this.props.mediaType) {
@@ -133,8 +139,18 @@ class AddTrackModal extends Component {
                         </Field>
                         <Field>
                             <Control className="buttons-control">
-                                <Button className="modal-button cancel-button">Cancel</Button>
-                                <Button className="modal-button add-button">Add</Button>
+                                <Button
+                                    className="modal-button cancel-button"
+                                    onClick={this.props.close}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    className="modal-button add-button"
+                                    onClick={this.addTrack}
+                                >
+                                    Add
+                                </Button>
                             </Control>
                         </Field>
                     </Box>
@@ -147,4 +163,4 @@ class AddTrackModal extends Component {
 
 const mapStateToProps = state => ({ directoryTree: state.directoryTree });
 
-export default connect(mapStateToProps)(AddTrackModal);
+export default connect(mapStateToProps, { addTrack })(AddTrackModal);
