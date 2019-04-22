@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
     Box,
+    Button,
+    Content,
+    Control,
     Field,
+    Image,
+    Media,
+    MediaContent,
+    MediaLeft,
     Modal,
     ModalBackground,
     ModalContent,
@@ -11,7 +18,13 @@ import {
 import _ from 'lodash';
 
 import './AddTrackModal.css';
-import { FolderIcon } from '../components/icons';
+import {
+    BandCampIcon,
+    FolderIcon,
+    SoundCloudIcon,
+    SpotifyIcon,
+    YoutubeIcon
+} from '../components/icons';
 
 class Folder extends Component {
 
@@ -60,11 +73,24 @@ class Folder extends Component {
 class AddTrackModal extends Component {
 
     state = {
-        path: null,
+        path: [],
         selectedId: null,
     };
 
-    selectFolder = (id, path) => this.setState({ path: path, selectedId: id }, () => console.log(this.state));
+    selectFolder = (id, path) => this.setState({ path: path, selectedId: id });
+
+    getMediaTypeIcon = () => {
+        switch (this.props.mediaType) {
+            case 'BANDCAMP':
+                return <BandCampIcon/>;
+            case 'SOUNDCLOUD':
+                return <SoundCloudIcon/>;
+            case 'SPOTIFY':
+                return <SpotifyIcon/>;
+            case 'YOUTUBE':
+                return <YoutubeIcon/>;
+        }
+    };
 
     renderFolders = () => this.props.directoryTree.folders
         .sort((a, b) => {
@@ -89,12 +115,27 @@ class AddTrackModal extends Component {
                 <ModalContent>
                     <Box>
                         <Field>
-                            <span>do ittt</span>
+                            <Media>
+                                <MediaLeft>
+                                    <Image isSize="64x64" src={this.props.track.thumbnailUrl}/>
+                                </MediaLeft>
+                                <MediaContent>
+                                    <Content><p>{this.props.track.title}</p></Content>
+                                </MediaContent>
+                            </Media>
+                            <br/>
+                            <p><strong>Add to:</strong></p>
                         </Field>
                         <Field>
                             <div className="folder-list">
                                 <ul>{this.renderFolders()}</ul>
                             </div>
+                        </Field>
+                        <Field>
+                            <Control className="buttons-control">
+                                <Button className="modal-button cancel-button">Cancel</Button>
+                                <Button className="modal-button add-button">Add</Button>
+                            </Control>
                         </Field>
                     </Box>
                 </ModalContent>

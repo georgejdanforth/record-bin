@@ -31,3 +31,22 @@ span.folder:hover {
 span.selected {
     background: lightblue;
 }
+
+div.buttons-control {
+    text-align: center;
+}
+
+button.modal-button {
+    min-width: 10rem;
+    border-radius: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+button.cancel-button:hover {
+    background: lightgrey;
+}
+
+button.add-button:hover {
+    background: lightblue;
+}
