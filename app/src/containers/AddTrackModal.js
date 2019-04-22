@@ -8,23 +8,44 @@ import {
     ModalContent,
     ModalClose,
 } from 'bloomer';
+import _ from 'lodash';
 
 import './AddTrackModal.css';
 import { FolderIcon } from '../components/icons';
 
 class Folder extends Component {
 
+    selectFolder = (id, path=[]) =>
+        this.props.selectFolder(id, _.concat([this.props.id], path));
+
     renderFolders = () => this.props.folders
         .sort((a, b) => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
             if (b.name.toUpperCase() > a.name.toUpperCase()) return -1;
             return 0;
-        }).map(folder => <li key={folder.id}><Folder {...folder}/></li>);
+        }).map(folder => (
+            <li key={folder.id}>
+                <Folder
+                    selectFolder={this.selectFolder}
+                    selectedId={this.props.selectedId}
+                    {...folder}
+                />
+            </li>
+        ));
 
     render() {
+        const titleClass = 'folder' + (
+            this.props.id === this.props.selectedId
+                ? ' selected'
+                : ''
+        );
+
         return (
             <div>
-                <span>
+                <span
+                    className={titleClass}
+                    onClick={() => this.selectFolder(this.props.id)}
+                >
                     <span><FolderIcon/></span>
                     <span>{this.props.name}</span>
                 </span>
@@ -38,12 +59,27 @@ class Folder extends Component {
 
 class AddTrackModal extends Component {
 
+    state = {
+        path: null,
+        selectedId: null,
+    };
+
+    selectFolder = (id, path) => this.setState({ path: path, selectedId: id }, () => console.log(this.state));
+
     renderFolders = () => this.props.directoryTree.folders
         .sort((a, b) => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
             if (b.name.toUpperCase() > a.name.toUpperCase()) return -1;
             return 0;
-        }).map(folder => <li key={folder.id}><Folder {...folder}/></li>);
+        }).map(folder => (
+            <li key={folder.id}>
+                <Folder
+                    selectFolder={this.selectFolder}
+                    selectedId={this.state.selectedId}
+                    {...folder}
+                />
+            </li>
+        ));
 
     render() {
         if (!this.props.track) return <div/>;

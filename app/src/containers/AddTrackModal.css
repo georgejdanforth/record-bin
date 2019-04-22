@@ -1,3 +1,7 @@
+div.box {
+    border-radius: 0;
+}
+
 ul {
     list-style-type: none;
 }
@@ -7,9 +11,23 @@ li {
 }
 
 div.folder-list {
-    max-width: 80%;
-    max-height: 12em;
+    max-width: 90%;
+    max-height: 18em;
     overflow: scroll;
     margin: auto;
     border: 1px solid lightgray;
+}
+
+span.folder {
+    padding: 0.1rem;
+    display: block;
+    width: 100%;
+}
+
+span.folder:hover {
+    cursor: pointer;
+}
+
+span.selected {
+    background: lightblue;
 }
