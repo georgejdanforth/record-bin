@@ -3,9 +3,11 @@ import {
     Navbar,
     NavbarBrand,
     NavbarItem,
+    NavbarMenu,
 } from 'bloomer';
 
 import './Header.css';
+import Export from '../containers/Export';
 
 const Header = () => (
     <Navbar className="header is-fixed-top">
@@ -15,6 +17,9 @@ const Header = () => (
                 <span style={{ marginLeft: '1rem'}}>Record Bin</span>
             </NavbarItem>
         </NavbarBrand>
+        <NavbarMenu>
+            <Export/>
+        </NavbarMenu>
     </Navbar>
 );
 
