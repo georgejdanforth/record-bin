@@ -11,6 +11,7 @@
     "bulma-tooltip": "^2.0.2",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
+    "papaparse": "^4.6.3",
     "react": "^16.6.3",
     "react-dnd": "^7.0.2",
     "react-dnd-html5-backend": "^7.0.2",
